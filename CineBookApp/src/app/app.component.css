@@ -1,0 +1,21 @@
+.poster-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.movie-poster {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgb(0, 0, 0);
+}
+
+.top-navbar-center {
+  top: 70px; /* or whatever your navbar height is */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1080;
+}
