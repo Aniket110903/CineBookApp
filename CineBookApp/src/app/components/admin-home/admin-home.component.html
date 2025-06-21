@@ -1,1 +1,88 @@
-<p>admin-home works!</p>
+<!--<app-admin-navbar></app-admin-navbar>-->
+<div class="m-4">
+  <div class="d-flex align-items-center justify-content-between mx-4">
+    <h1>Analytics</h1>
+  </div>
+  <app-view-analytics></app-view-analytics>
+</div>
+
+<div class="m-4">
+  <div class="d-flex align-items-center justify-content-between mx-4">
+    <h1>Movies</h1>
+    <button class="btn btn-primary" (click)="modifyMovies()">Manage Movies</button>
+  </div>
+  <app-view-movies></app-view-movies>
+
+
+  <div class="m-4">
+    <div class="d-flex align-items-center justify-content-between mx-4">
+      <h1>Theaters</h1>
+      <button class="btn btn-primary" (click)="modifyTheater()">Manage Theaters</button>
+    </div>
+    <div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4 mt-4" *ngFor="let theater of filterTheater;let i = index">
+            <div class="card card-gradient shadow-sm " *ngIf="i < 6">
+              <div class="card-body" (click)="modifyTheater()">
+                <!-- Theater name -->
+                <h5 class="card-title text-light">
+                  {{ theater.name }}
+                </h5>
+
+                <!-- Location -->
+                <h6 class="card-subtitle mb-2 text-light fw-bold">{{ theater.location }}</h6>
+
+                <!-- Address with truncation and hover effect -->
+                <h6 class="card-subtitle mb-2 text-dark address" [attr.title]="theater.address">
+                  {{ theater.address }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m-4">
+    <div class="d-flex align-items-center justify-content-between mx-4">
+      <h1>Show Time</h1>
+      <button class="btn btn-primary" (click)="modifyshowtime()">Manage Showtime</button>
+    </div>
+    <div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4 mt-4" *ngFor="let showtime of FilterShowTimming;let i = index">
+            <div class="card card-gradient shadow-sm " *ngIf="i < 6">
+              <div class="card-body" (click)="modifyshowtime()">
+                <!-- Theater name + location -->
+                <h5 class="card-title text-light">
+                  {{ showtime.theaterName }}
+                  <span class="text-dark" style="font-size: 0.9em;">
+                    ({{ showtime.location }})
+                  </span>
+                </h5>
+
+                <!-- Movie Name -->
+                <h6 class="card-subtitle mb-2 text-dark">{{ showtime.MovieName }}</h6>
+
+                <!-- Showtime -->
+                <p class="card-text">
+                  <strong>Showtime:</strong><br>
+                  {{ showtime.startTime | date:'shortTime' }} - {{ showtime.endTime | date:'shortTime' }}<br>
+                  <small class="text-dark">
+                    {{ showtime.startTime | date:'fullDate' }}
+                  </small>
+                </p>
+
+                <p class="card-text text-dark">
+                  <strong>Showtime ID:</strong> {{ showtime.showtimeId }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

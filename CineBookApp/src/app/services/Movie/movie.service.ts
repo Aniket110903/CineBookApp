@@ -10,24 +10,24 @@ export class MovieService {
   constructor(private http: HttpClient) { }
 
   getAllMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>("https://localhost:44325/api/Movie/GetAllMovies").pipe(catchError(this.errorHandler));
+    return this.http.get<Movie[]>("http://cinebook.runasp.net/api/Movie/GetAllMovies").pipe(catchError(this.errorHandler));
   }
 
   addMovie(movie: Movie): Observable<string> {
-    return this.http.post<string>("https://localhost:44325/api/Movie/AddMovie", movie).pipe(catchError(this.errorHandler));
+    return this.http.post<string>("http://cinebook.runasp.net/api/Movie/AddMovie", movie).pipe(catchError(this.errorHandler));
   }
 
   editMovie(movie: Movie): Observable<string> {
-    return this.http.put<string>("https://localhost:44325/api/Movie/UpdateMovie", movie).pipe(catchError(this.errorHandler));
+    return this.http.put<string>("http://cinebook.runasp.net/api/Movie/UpdateMovie", movie).pipe(catchError(this.errorHandler));
   }
   getMovieDetais(MovieId: number): Observable<Movie> {
-    return this.http.get<Movie>("https://localhost:44325/api/Movie/GetMovieDetails?movieId=" + MovieId).pipe(catchError(this.errorHandler));
+    return this.http.get<Movie>("http://cinebook.runasp.net/api/Movie/GetMovieDetails?movieId=" + MovieId).pipe(catchError(this.errorHandler));
   }
   deleteMovie(MovieId: string) {
-    return this.http.delete<string>("https://localhost:44325/api/Movie/DeleteMovie?MovieId=" + MovieId).pipe(catchError(this.errorHandler));
+    return this.http.delete<string>("http://cinebook.runasp.net/api/Movie/DeleteMovie?MovieId=" + MovieId).pipe(catchError(this.errorHandler));
   }
   AddRating(rate: Feedbacks): Observable<string> {
-    return this.http.post<string>("https://localhost:44325/api/Feedback/AddRating", rate).pipe(catchError(this.errorHandler));
+    return this.http.post<string>("http://cinebook.runasp.net/api/Feedback/AddRating", rate).pipe(catchError(this.errorHandler));
   }
 
 

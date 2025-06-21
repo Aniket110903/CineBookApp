@@ -1,0 +1,76 @@
+.card-gradient {
+  background: linear-gradient(135deg, #076266f2, #a6fbe4); /* Gradient colors */
+  color: white;
+  border: none;
+}
+
+.address {
+  white-space: nowrap; /* Prevent the address from wrapping to a new line */
+  overflow: hidden; /* Hide the overflowing content */
+  text-overflow: ellipsis; /* Show the ellipsis (...) when the content overflows */
+  max-width: 100%; /* Limit the width of the text */
+  display: block; /* Ensure it's treated as a block element for truncation */
+  cursor: pointer; /* Indicate it's clickable */
+}
+
+  /* Optional: Show the full address on hover (via title) */
+  .address:hover {
+    text-decoration: underline; /* Optional: underline when hovered */
+  }
+
+@media (max-width: 768px) {
+  .form-row {
+    flex-wrap: wrap; /* allow wrap */
+    flex-direction: column; /* stack vertically */
+    align-items: stretch; /* stretch width */
+  }
+
+  .dropdown, .add-theater-btn {
+    width: 100%; /* full width on small screens */
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+  .add-theater-btn {
+    margin-bottom: -28px; /* remove last margin */
+  }
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dropdown, .add-theater-btn {
+    width: 100% !important;
+    margin-bottom: 10px !important;
+  }
+
+  .add-theater-btn {
+    margin-bottom: 0 !important;
+  }
+}
+/* Tablets */
+@media (max-width: 768px) {
+  .card-gradient {
+    padding: 15px;
+    font-size: 1.1rem;
+  }
+
+  .address {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .card-gradient {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .address {
+    font-size: 0.9rem;
+  }
+}

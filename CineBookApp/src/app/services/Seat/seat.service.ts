@@ -9,6 +9,6 @@ export class SeatService {
 
   constructor(private http: HttpClient) { }
   getSeatsByShowTime(showtimeId: number): Observable<{ [row: string]: any[] }> {
-    return this.http.get<any>(`https://localhost:44325/api/Seats/GetSeatByShowTime?showtimeId=${showtimeId}`);
+    return this.http.get<any>(`http://cinebook.runasp.net/api/Seats/GetSeatByShowTime?showtimeId=${showtimeId}`);
   }
 }

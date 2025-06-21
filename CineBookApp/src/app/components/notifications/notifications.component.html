@@ -1,1 +1,8 @@
-<p>notifications works!</p>
+<div *ngIf="showNotifications && notifications.length" class="notification-container">
+  <div *ngFor="let note of notifications" class="notification" [class.read]="note.isRead === 1" (click)="goToNotification()">
+    <button class="close-btn" (click)="dismissNotification(note.notificationId)">×</button>
+    <div class="type">{{ note.notificationType }}</div>
+    <div class="message">{{ note.message }}</div>
+    <div class="time">{{ note.sentTime | date: 'short' }}</div>
+  </div>
+</div>

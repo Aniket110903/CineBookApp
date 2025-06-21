@@ -1,1 +1,141 @@
-<p>booking-history works!</p>
+<!-- Filter Icon -->
+<div class="filter-icon-wrapper" (click)="toggleFilterBar()" style="z-index:0">
+  <i class="fa fa-filter" style="z-index:0"></i>
+</div>
+<div class="back-button-container">
+  <button class="btn back-button" (click)="goBack()">
+    <i class="fa fa-arrow-left"></i> Back
+  </button>
+</div>
+<div class="container mt-5">
+  <h4 class="booking-heading">Bookings</h4>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar" *ngIf="showFilterBar">
+    <div class="filter-group">
+      <label>Status:</label>
+      <select [(ngModel)]="selectedStatus">
+        <option value="">All</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Pending">Pending</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Timeline:</label>
+      <select [(ngModel)]="selectedTimeline">
+        <option value="">All Time</option>
+        <option value="1week">Last 1 Week</option>
+        <option value="1month">Last 1 Month</option>
+        <option value="1year">Last 1 Year</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary mt-3" (click)="applyFilter()">Apply</button>
+  </div>
+
+  <hr class="booking-header" />
+  <div class="booking-list">
+    <div class="booking-card" *ngFor="let booking of bookings">
+      <div class="booking-card-box" (click)="showDetailsModal(booking)">
+        <div class="card-body">
+          <h5 class="card-title">{{ booking.showtime.movieTitle }}</h5>
+          <p class="card-text">
+            {{ booking.showtime.theaterName }} - {{ booking.showtime.theaterLoc }}<br />
+            <small class="text-muted">{{ booking.showtime.theaterAdd }}</small>
+          </p>
+          <p class="card-text">
+            {{ booking.showtime.startTime | date: 'medium' }}
+          </p>
+          <p class="card-text">Status: {{ booking.bookingStatus }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Details Modal -->
+  <div *ngIf="selectedBooking && !showCancelConfirmation" class="modal" tabindex="-1" style="display: block;">
+    <div class="modal-header">
+      <h5 class="modal-title">Booking #{{ selectedBooking.bookingId }}</h5>
+      <button type="button" class="btn btn-primary mt-3" aria-label="Close" (click)="closeDetailsModal()"></button>
+    </div>
+    <div class="modal-body d-flex" style="gap: 2rem;">
+      <!-- Left Column -->
+      <div class="modal-left" style="flex: 1; display: flex; flex-direction: column; gap: 1rem;">
+        <p><strong>Movie:</strong> {{ selectedBooking.showtime.movieTitle }}</p>
+        <p><strong>Theater:</strong> {{ selectedBooking.showtime.theaterName }}</p>
+        <p><strong>Showtime:</strong> {{ selectedBooking.showtime.startTime | date: 'medium' }}</p>
+        <p><strong>Status:</strong> {{ selectedBooking.bookingStatus }}</p>
+        <p><strong>Total Amount:</strong> ₹{{ selectedBooking.totalAmount }}</p>
+      </div>
+
+      <!-- Right Column -->
+      <div class="modal-right" style="flex: 1; display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <p><strong>Seats:</strong></p>
+          <ul>
+            <li *ngFor="let seat of selectedBooking.seats">
+              Row {{ seat.rowLabel }}, Seat {{ seat.seatNumber }}
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p><strong>Payment Date:</strong></p>
+          <ul>
+            <li *ngFor="let payment of selectedBooking.payments">
+              {{ payment.paymentTime | date: 'longDate' }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-between">
+      <button *ngIf="selectedBooking?.bookingStatus?.toLowerCase() === 'pending'"
+              type="button"
+              class="btn btn-primary"
+              (click)="proceedToPayment(selectedBooking)">
+        Proceed to Payment
+      </button>
+      <button *ngIf="canCancel(selectedBooking!)"
+              type="button"
+              class="btn btn-danger"
+              (click)="openCancelModal(selectedBooking)">
+        Cancel Ticket
+      </button>
+
+      <button type="button" class="btn btn-primary" (click)="closeDetailsModal()">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal backdrop for booking details -->
+  <div *ngIf="selectedBooking && !showCancelConfirmation" class="modal-backdrop"></div>
+
+  <!-- Cancel Confirmation Modal -->
+  <div *ngIf="showCancelConfirmation && cancelBooking" class="modal text-center p-2" tabindex="-1" style="display: block; font-size: 14px;">
+    <div class="modal-header ">
+      <h5 class="modal-title">Cancel Booking Confirmation</h5>
+      <button type="button" class="btn btn-primary position-absolute end-0 me-3" aria-label="Close" (click)="closeCancelModal()"></button>
+    </div>
+
+    <div class="modal-body p-2">
+      <li><strong>Movie:</strong> {{ cancelBooking.showtime.movieTitle }}</li>
+      <li><strong>Total Paid:</strong> ₹{{ cancelBooking.totalAmount }}</li>
+      <li><strong>Refund (90%):</strong> ₹{{ refundAmount }}</li>
+
+    </div>
+
+    <div class="modal-footer d-flex justify-content-around p-2">
+
+      <button class="btn btn-danger px-3 py-1" (click)="confirmCancel()">Yes, Cancel</button>
+      <button class="btn btn-secondary px-3 py-1" (click)="closeCancelModal()">No, Go Back</button>
+    </div>
+  </div>
+
+  <!-- Modal backdrop for cancel confirmation -->
+  <div *ngIf="showCancelConfirmation && cancelBooking" class="modal-backdrop"></div>
+
+</div>

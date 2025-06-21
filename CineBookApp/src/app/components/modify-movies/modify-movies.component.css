@@ -1,0 +1,28 @@
+.custom-bg {
+  display: block;
+  /*  padding-top: 0.1rem;*/
+  background-color: rgba(255, 255, 255, 0.75); /* Light grey with 80% opacity */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.card-gradient {
+  background: linear-gradient(135deg, #076266f2, #a6fbe4); /* Gradient colors */
+  color: white;
+  border: none;
+}
+
+.modal-footer .btn {
+  min-width: 120px; /* Set a minimum width for buttons if needed */
+}
+
+.modal-footer .btn-danger {
+  margin-right: auto; /* Ensures the Delete button stays on the left */
+}
+
+.movie-thumbnail {
+  height: 310px; /* Fixed height for uniformity */
+  width: 100%; /* Take full card width */
+  object-fit: cover; /* Crop and fill the area while maintaining aspect ratio */
+  border-top-left-radius: 0.5rem; /* Match Bootstrap card styling */
+  border-top-right-radius: 0.5rem;
+}

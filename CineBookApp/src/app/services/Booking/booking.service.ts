@@ -9,7 +9,7 @@ import { ConfirmBooking } from '../../interfaces/ConfirmBooking';
 })
 export class BookingService {
   [x: string]: any;
-  private baseUrl = 'https://localhost:44325/api/Users/BookingHistory'; // Your actual endpoint
+  private baseUrl = 'http://cinebook.runasp.net/api/Users/BookingHistory'; // Your actual endpoint
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class BookingService {
   }
 
   AddBooking(addBooking: AddBooking) {
-    return this.http.post<any>("https://localhost:44325/api/Booking/CreateBooking", addBooking).pipe(catchError(this.errorHandler));
+    return this.http.post<any>("http://cinebook.runasp.net/api/Booking/CreateBooking", addBooking).pipe(catchError(this.errorHandler));
   }
   ConfirmBooking(bookingId: number, seats: number[], razorpayId: string, razopayOrderId: string, razorpaySignature: string, Status: string, useLoyalty: boolean, userId: number) {
     const confirmBooking: ConfirmBooking = {
@@ -35,15 +35,15 @@ export class BookingService {
       UseLoyaltyPoints: useLoyalty,
       UserId: userId
     }
-    return this.http.post<any>("https://localhost:44325/api/Booking/ConfirmBooking", confirmBooking).pipe(catchError(this.errorHandler));
+    return this.http.post<any>("http://cinebook.runasp.net/api/Booking/ConfirmBooking", confirmBooking).pipe(catchError(this.errorHandler));
   }
   cancelBooking(bookingId: number): Observable<string> {
-    return this.http.delete<string>(`https://localhost:44325/api/Booking/CancelBooking?bookingId=${bookingId}`).pipe(catchError(this.errorHandler));
+    return this.http.delete<string>(`http://cinebook.runasp.net/api/Booking/CancelBooking?bookingId=${bookingId}`).pipe(catchError(this.errorHandler));
 
   }
 
   getAllBookings(): Observable<Booking[]> {
-    return this.http.get<Booking[]>("https://localhost:44325/api/Booking/GetAllBookings").pipe(catchError(this.errorHandler));
+    return this.http.get<Booking[]>("http://cinebook.runasp.net/api/Booking/GetAllBookings").pipe(catchError(this.errorHandler));
   }
 
   errorHandler(error: HttpErrorResponse) {

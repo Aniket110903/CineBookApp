@@ -1,0 +1,21 @@
+.bg-teal {
+  background-color: #008080; /* Teal */
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.navbar-nav .nav-link:hover {
+  color: black; /* Light teal tint */
+}
+
+.dropdown-menu {
+  background-color: #f8f9fa;
+}

@@ -1,0 +1,33 @@
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2rem;
+  max-height: 2.4rem;
+}
+
+.text-truncate-1 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-body {
+  width: 100%;
+}
+
+.movie-thumbnail {
+  height: 310px; /* Fixed height for uniformity */
+  width: 100%; /* Take full card width */
+  object-fit: cover; /* Crop and fill the area while maintaining aspect ratio */
+  border-top-left-radius: 0.5rem; /* Match Bootstrap card styling */
+  border-top-right-radius: 0.5rem;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+}

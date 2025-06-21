@@ -1,1 +1,139 @@
-<p>manage-theaters works!</p>
+<div class="back-button-container">
+  <button class="btn back-button" (click)="goBack()">
+    <i class="fa fa-arrow-left"></i> Back
+  </button>
+</div>
+<div class="mx-4 mt-4">
+  <h2>Manage Theaters</h2>
+  <div class="filter-bar d-flex justify-content-between align-items-center p-3 mb-3 shadow-sm bg-white rounded">
+    <!-- Left side: Filters -->
+    <div class="filters d-flex gap-3">
+      <div class="form-group mb-0">
+        <label for="locationSelect" class="form-label">Choose a Location:</label>
+        <select #locationSelect id="locationSelect" class="form-select" (change)="onChange(locationSelect.value)">
+          <option [value]="0">All</option>
+          <option *ngFor="let location of locations" [value]="location">
+            {{ location }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Right side: Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn btn-primary" (click)="openAddModal()">Add a Theater</button>
+    </div>
+  </div>
+</div>
+
+
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4 mt-4" *ngFor="let theater of filteredTheaters">
+        <div class="card card-gradient shadow-sm bg-" (click)="openEditModal(theater)">
+          <div class="card-body">
+            <!-- Theater name -->
+            <h5 class="card-title text-light">
+              {{ theater.name }}
+            </h5>
+
+            <!-- Location -->
+            <h6 class="card-subtitle mb-2 text-light fw-bold">{{ theater.location }}</h6>
+
+            <!-- Address with truncation and hover effect -->
+            <h6 class="card-subtitle mb-2 text-dark address" [attr.title]="theater.address">
+              {{ theater.address }}
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="showMovieTheatreModal" tabindex="-1" aria-labelledby="showMovieTheaterModalLabel" data-bs-backdrop="static"
+     data-bs-keyboard="false" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form #theaterForm="ngForm">
+        <div class="modal-header card-gradient">
+          <h5 class="modal-title" id="showMovieTheaterModalLabel">{{  editingTheater ? 'Edit' : 'Add' }} Theater</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="CloseModalFormReset(theaterForm)" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <div>
+              <label for="name" class="form-label">Theater Name</label>
+            </div>
+            <input type="text"
+                   id="name"
+                   name="name"
+                   #name="ngModel"
+                   required
+                   [(ngModel)]="modalData.name"
+                   class="form-control" />
+            <div *ngIf="name.errors && (name.dirty || name.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!name.errors['required']">
+                <p>&nbsp;Theater Name is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div>
+              <label for="address" class="form-label">Address</label>
+            </div>
+            <input type="text"
+                   id="address"
+                   name="address"
+                   #address="ngModel"
+                   required
+                   [(ngModel)]="modalData.address"
+                   class="form-control" />
+            <div *ngIf="address.errors && (address.dirty || address.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!address.errors['required']">
+                <p>&nbsp;Address is mandatory</p>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div>
+              <label for="location" class="form-label">Location</label>
+            </div>
+            <input type="text"
+                   id="location"
+                   name="location"
+                   #location="ngModel"
+                   required
+                   [(ngModel)]="modalData.location"
+                   class="form-control" />
+            <div *ngIf="location.errors && (location.dirty || location.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!location.errors['required']">
+                <p>&nbsp;Location is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div *ngIf="editingTheater" class="modal-footer d-flex justify-content-between">
+          <button class="btn btn-danger " (click)="deleteTheater()">Delete Theater</button>
+          <div>
+            <button (click)="saveTheater()" class="btn btn-success" [disabled]="!theaterForm['form'].valid">Save</button>
+            <button class="btn btn-secondary ms-2" (click)="CloseModalFormReset(theaterForm)" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+
+        <div *ngIf="!editingTheater" class="modal-footer">
+          <button (click)="saveTheater()" class="btn btn-success" [disabled]="!theaterForm['form'].valid">Save</button>
+          <button class="btn btn-secondary ms-2" (click)="CloseModalFormReset(theaterForm)" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

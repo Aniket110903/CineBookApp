@@ -19,33 +19,33 @@ export class ViewShowTimingService {
 
     //console.log(date + " " + movieId + " " + location);
     const formattedDate = date.toISOString().split('T')[0];
-    return this.http.get<Theatre[]>("https://localhost:44325/api/ShowTiming/ViewShowTiming?date=" + formattedDate + "&movieId=" + movieId + "&location=" + location).pipe(catchError(this.errorHandler));
+    return this.http.get<Theatre[]>("http://cinebook.runasp.net/api/ShowTiming/ViewShowTiming?date=" + formattedDate + "&movieId=" + movieId + "&location=" + location).pipe(catchError(this.errorHandler));
 
   }
 
   getShowTimming(): Observable<Showtime[]> {
-    return this.http.get<Showtime[]>("https://localhost:44325/api/ShowTiming/GetAllShowTiming").pipe(catchError(this.errorHandler));
+    return this.http.get<Showtime[]>("http://cinebook.runasp.net/api/ShowTiming/GetAllShowTiming").pipe(catchError(this.errorHandler));
   }
 
   addShowTimming(showtime: Showtime): Observable<string> {
-    return this.http.post<string>("https://localhost:44325/api/ShowTiming/AddShowTimings", showtime).pipe(catchError(this.errorHandler));
+    return this.http.post<string>("http://cinebook.runasp.net/api/ShowTiming/AddShowTimings", showtime).pipe(catchError(this.errorHandler));
   }
   editShowTimming(showtime: Showtime): Observable<string> {
-    return this.http.put<string>("https://localhost:44325/api/ShowTiming/UpdateShowTime", showtime).pipe(catchError(this.errorHandler));
+    return this.http.put<string>("http://cinebook.runasp.net/api/ShowTiming/UpdateShowTime", showtime).pipe(catchError(this.errorHandler));
   }
 
   deleteShowTime(showtimeId: string) {
-    return this.http.delete<string>("https://localhost:44325/api/ShowTiming/DeleteShowTime?showTimeId=" + showtimeId).pipe(catchError(this.errorHandler));
+    return this.http.delete<string>("http://cinebook.runasp.net/api/ShowTiming/DeleteShowTime?showTimeId=" + showtimeId).pipe(catchError(this.errorHandler));
   }
   deleteAllPrevShowTime() {
-    return this.http.delete<string>("https://localhost:44325/api/ShowTiming/DeleteAllPrevShowTime").pipe(catchError(this.errorHandler));
+    return this.http.delete<string>("http://cinebook.runasp.net/api/ShowTiming/DeleteAllPrevShowTime").pipe(catchError(this.errorHandler));
   }
   getMovieDetail(movieId: number): Observable<Movie> {
-    return this.http.get<Movie>("https://localhost:44325/api/Movie/getMovieDetails?movieId=" + movieId).pipe(catchError(this.errorHandler));
+    return this.http.get<Movie>("http://cinebook.runasp.net/api/Movie/getMovieDetails?movieId=" + movieId).pipe(catchError(this.errorHandler));
   }
 
   getShowtimeDetails(showtimeId: number) {
-    return this.http.get<ShowtimeDetails>("https://localhost:44325/api/ShowTiming/getShowtimeDetails?showtimeId=" + showtimeId).pipe(catchError(this.errorHandler));
+    return this.http.get<ShowtimeDetails>("http://cinebook.runasp.net/api/ShowTiming/getShowtimeDetails?showtimeId=" + showtimeId).pipe(catchError(this.errorHandler));
   }
 
   private errorHandler(error: HttpErrorResponse) {

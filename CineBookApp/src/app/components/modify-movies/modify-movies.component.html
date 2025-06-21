@@ -1,1 +1,141 @@
-<p>modify-movies works!</p>
+<div class="back-button-container">
+  <button class="btn back-button" (click)="goBack()">
+    <i class="fa fa-arrow-left"></i> Back
+  </button>
+</div>
+<div class="m-4">
+  <div class="d-flex justify-content-between align-items-center mx-4">
+    <h2>Manage Movies</h2>
+    <button class="btn btn-primary" (click)="openAddModal()">Add a Movie</button>
+  </div>
+  <div class="container mt-5">
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-4">
+      <div class="col" *ngFor="let movie of movies">
+        <div (click)="openEditMovies(movie)" class="d-flex flex-wrap g-4">
+
+          <div class="card position-relative" style="width: 14rem;">
+            <img src="{{movie.posterUrl}}" class="card-img-top movie-thumbnail" alt="Movie Poster">
+
+            <!-- Rating Overlay -->
+            <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white px-2 py-1 d-flex justify-content-between align-items-center" style="font-size: 0.8rem;">
+              <span><i class="fa fa-star text-warning"></i>&nbsp;{{movie.rating| number:'1.1-1'}}/10 </span>
+              <span>{{movie.feedbacks.length}} Votes</span>
+            </div>
+          </div>
+
+          <!-- Title and Genre -->
+          <div class="card-body">
+            <h6 class="card-title mb-1">{{movie.title}}</h6>
+            <p class="card-text text-muted" style="font-size: 0.85rem;">{{movie.genre}}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editMovieModal" tabindex="-1" aria-labelledby="editMovieModalLabel" [attr.aria-hidden]="!editMovies" data-bs-backdrop="static"
+     data-bs-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form (ngSubmit)="saveMovies()" #editMovieForm="ngForm">
+        <!-- Modal Header -->
+        <div class="modal-header card-gradient">
+          <h5 class="modal-title" id="editMovieModalLabel">
+            {{ editingMovie ? 'Edit Movie' : 'Add Movie' }}
+          </h5>
+          <button type="button" class="btn-close" (click)="closeModal(editMovieForm)" aria-label="Close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+
+
+          <!-- Movie Title -->
+          <div class="mb-3">
+            <label for="movieTitle" class="form-label">Movie Title</label>
+            <input type="text" id="movieTitle" class="form-control" [(ngModel)]="selectedMovie.title" name="title" required #title="ngModel">
+            <div *ngIf="title.errors && (title.dirty || title.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!title.errors['required']">
+                <p>&nbsp;Title is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Movie Description -->
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" class="form-control" [(ngModel)]="selectedMovie.description" name="description" required #dec="ngModel"></textarea>
+            <div *ngIf="dec.errors && (dec.dirty || dec.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!dec.errors['required']">
+                <p>&nbsp;Description is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Movie Poster -->
+          <div class="mb-3">
+            <label for="moviePoster" class="form-label d-block">Poster</label>
+            <p>Selected file: {{ fileName }}</p>
+            <input type="file"
+                   id="moviePoster"
+                   (change)="onFileSelected($event)"
+                   accept="image/*"
+                   #poster="ngModel"
+                   ngModel
+                   name="poster" />
+
+            <!-- Error message when no file is selected -->
+            <div *ngIf="!fileName && poster.errors && (poster.dirty || poster.touched)"
+                 style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!poster.errors['required']">
+                <p>&nbsp;Poster is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Movie Genre -->
+          <div class="mb-3">
+            <label for="genre" class="form-label">Genre </label>
+            <input type="text" id="genre" class="form-control" [(ngModel)]="selectedMovie.genre" name="genre" required #genre="ngModel" />
+            <div *ngIf="genre.errors && (genre.dirty || genre.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!genre.errors['required']">
+                <p>&nbsp;Genre is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Release Date -->
+          <div class="mb-3">
+            <label for="releaseDate" class="form-label">Release Date</label>
+            <input type="date" id="releaseDate" #releaseDate="ngModel" class="form-control" [(ngModel)]="selectedMovie.releaseDate" [min]="today" required name="releaseDate" />
+            <div *ngIf="releaseDate.errors && (releaseDate.dirty || releaseDate.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!releaseDate.errors['required']">
+                <p>&nbsp;Release Date is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div *ngIf="!editingMovie" class="modal-footer">
+          <button type="button" class="btn btn-secondary " (click)="closeModal(editMovieForm)" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success" [disabled]="!editMovieForm.form.valid">Save</button>
+        </div>
+
+        <!-- Modal Footer (with Delete, Save, and Cancel Buttons) -->
+        <div *ngIf="editingMovie" class="modal-footer d-flex justify-content-between">
+          <!-- Delete Movie (only visible when editing) -->
+          <button type="button" class="btn btn-danger" (click)="deleteMovie()">Delete Movie</button>
+          <!-- Save and Cancel Buttons -->
+          <div>
+            <button type="button" class="btn btn-secondary" (click)="closeModal(editMovieForm)" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success ms-2" [disabled]="!editMovieForm.form.valid">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

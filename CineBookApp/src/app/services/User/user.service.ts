@@ -9,7 +9,7 @@ import { User } from '../../interfaces/User';
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = "https://localhost:44325/api/Users";
+  private baseUrl = "http://cinebook.runasp.net/api/Users";
   constructor(private http: HttpClient) { }
 
   validateCredentials(email: string, password: string): Observable<User> {
@@ -22,11 +22,11 @@ export class UserService {
       "role": "string",
       ResetCode: "string",
     }
-    return this.http.post<User>("https://localhost:44325/api/Users/LoginUser", body).pipe(catchError(this.errorHandler));
+    return this.http.post<User>("http://cinebook.runasp.net/api/Users/LoginUser", body).pipe(catchError(this.errorHandler));
   }
   RegisterUser(user: User): Observable<string> {
 
-    return this.http.post<string>("https://localhost:44325/api/Users/Register", user).pipe(catchError(this.errorHandler));
+    return this.http.post<string>("http://cinebook.runasp.net/api/Users/Register", user).pipe(catchError(this.errorHandler));
 
   }
   verifyResetCode(email: string, resetCode: string): Observable<boolean> {
@@ -44,7 +44,7 @@ export class UserService {
     );
   }
   updateProfile(updateprofile: UpdateProfile): Observable<string> {
-    return this.http.put<string>("https://localhost:44325/api/Users/UpdateProfile", updateprofile).pipe(catchError(this.errorHandler));
+    return this.http.put<string>("http://cinebook.runasp.net/api/Users/UpdateProfile", updateprofile).pipe(catchError(this.errorHandler));
   }
   addLoyalPoint(userId: number, seatIds: number[]): Observable<any> {
     const addloyalPoint: ConfirmBooking = {

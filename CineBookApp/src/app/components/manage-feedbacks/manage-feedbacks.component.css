@@ -1,0 +1,24 @@
+.custom-delete-btn {
+  background-color: red;
+  border: 1px solid transparent;
+  color: white; /* default icon color */
+  transition: all 0.2s ease-in-out;
+}
+
+  .custom-delete-btn:hover {
+    border: 1px solid red;
+    color: red;
+    background-color: white;
+  }
+
+  .custom-delete-btn i {
+    transition: color 0.2s ease-in-out;
+  }
+
+  .custom-delete-btn:hover i {
+    color: red;
+  }
+
+.bg {
+  background-color: #076266f2;
+}

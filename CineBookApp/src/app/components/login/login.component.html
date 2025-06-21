@@ -1,1 +1,44 @@
-<p>login works!</p>
+<div class="d-flex justify-content-center align-items-center vh-100" style="background: #f5f7fa;">
+  <form #loginForm="ngForm" (ngSubmit)="submitLoginForm(loginForm)"
+        class="p-5 shadow rounded bg-white" style="width: 100%; max-width: 400px;">
+
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Login</h2>
+    </div>
+    <!--Email-->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email ID</label>
+      <input type="email" id="email" name="email" #emailRef="ngModel"
+             class="form-control" ngModel required
+             pattern="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+             placeholder="e.g. user@example.com">
+      <div *ngIf="emailRef.errors && (emailRef.dirty || emailRef.touched)" class="text-danger mt-1">
+        <div *ngIf="emailRef.errors['required']">Email is required.</div>
+        <div *ngIf="emailRef.errors['pattern']">Invalid email format.</div>
+      </div>
+    </div>
+    <!--Password-->
+    <div class="mb-4">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" id="password" name="password" #passwordRef="ngModel"
+             class="form-control" ngModel required placeholder="Enter password">
+      <div *ngIf="passwordRef.errors && (passwordRef.dirty || passwordRef.touched)" class="text-danger mt-1">
+        <div *ngIf="passwordRef.errors['required']">Password is required.</div>
+      </div>
+    </div>
+    <!--Forgot Password Link-->
+    <div class="mt-2 text-end">
+      <a routerLink="/forgotpass" class="forgot-password">Forgot Password?</a>
+    </div>
+    <!--Submit-->
+    <div class="d-grid">
+      <button type="submit" [disabled]="!loginForm.form.valid" class="btn btn-primary">
+        Login
+      </button>
+      <div class="mt-2 text-center">
+        Didn't Have Account?
+        <a routerLink="/register" class="register">Register</a>
+      </div>
+    </div>
+  </form>
+</div>

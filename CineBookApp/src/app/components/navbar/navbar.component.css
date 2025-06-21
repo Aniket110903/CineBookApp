@@ -1,0 +1,30 @@
+.bg-teal {
+  background-color: #008383; /* Teal */
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+  .navbar-nav .nav-link:hover {
+    color: #d1e7dd; /* Light teal tint */
+  }
+
+.dropdown-menu {
+  background-color: #f8f9fa;
+}
+
+.location-btn:hover {
+  color: #008383;
+}
+
+.modal-custom {
+  margin-top: 130px;
+}
+
+.location-btn {
+  flex: 0 0 18%; /* roughly 5 buttons per row with gaps */
+  max-width: 18%;
+}

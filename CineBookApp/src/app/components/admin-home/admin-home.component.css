@@ -1,0 +1,125 @@
+.card-gradient {
+  background: linear-gradient(135deg, #076266f2, #a6fbe4); /* Gradient colors */
+  color: white;
+  border: none;
+}
+
+
+.address {
+  white-space: nowrap; /* Prevent the address from wrapping to a new line */
+  overflow: hidden; /* Hide the overflowing content */
+  text-overflow: ellipsis; /* Show the ellipsis (...) when the content overflows */
+  max-width: 100%; /* Limit the width of the text */
+  display: block; /* Ensure it's treated as a block element for truncation */
+  cursor: pointer; /* Indicate it's clickable */
+}
+
+  /* Optional: Show the full address on hover (via title) */
+  .address:hover {
+    text-decoration: underline; /* Optional: underline when hovered */
+  }
+/* Responsive for tablets and smaller */
+/* Reset for larger screens */
+@media (min-width: 769px) {
+  .dropdown, .add-theater-btn {
+    width: auto !important;
+    margin-bottom: 0 !important;
+    box-sizing: content-box !important;
+  }
+}
+/* Default for larger screens */
+.mx-4 {
+  margin-left: 1.5rem !important;
+  margin-right: -0.5rem !important;
+}
+
+/* Medium devices (tablets, smaller desktops) */
+@media (max-width: 1024px) {
+  .mx-4 {
+    margin-left: 1rem !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* Small devices (phones) */
+@media (max-width: 768px) {
+  .mx-4 {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* Extra small devices (small phones) */
+@media (max-width: 480px) {
+  .mx-4 {
+    margin-left: 0.25rem !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Stack charts vertically on smaller screens */
+  .chart-data-wrapper {
+    display: flex !important; /* force flex */
+    flex-direction: column !important; /* vertical stack */
+    gap: 20px; /* spacing between charts */
+  }
+
+  /* Make each chart take full width */
+  .chart-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: auto !important;
+    overflow-x: auto; /* horizontal scroll if content too wide */
+  }
+}
+
+
+/* For small screens only */
+/* For small screens only */
+@media (max-width: 768px) {
+  .parent-container-class {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 40px; /* space between dropdown and button */
+  }
+
+  .dropdown {
+    flex: 1 1 60%; /* dropdown takes about 60% */
+    min-width: 150px; /* minimum width so it doesn't get too small */
+  }
+
+  .add-theater-btn {
+    flex: 1 1 35%; /* button takes about 35% */
+    min-width: 120px;
+    margin-left: auto; /* pushes it to right side */
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Parent container for all charts */
+  .chart-data-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px;
+    align-items: stretch; /* make children stretch full width */
+  }
+
+  /* Each individual chart container */
+  .chart-container {
+    min-width: 280px; /* prevent shrinking too small */
+    width: 100% !important;
+    min-height: 300px; /* give height so charts don't collapse */
+    max-width: 100% !important;
+    box-sizing: border-box;
+    overflow: visible !important;
+  }
+
+    /* Optional: if your charts are canvas or SVGs inside */
+    .chart-container > * {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+    }
+}

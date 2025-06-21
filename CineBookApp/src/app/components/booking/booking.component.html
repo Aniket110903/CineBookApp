@@ -1,1 +1,128 @@
-<p>booking works!</p>
+<div class="back-button-container">
+  <button class="btn back-button" (click)="goBack()">
+    <i class="fa fa-arrow-left"></i> Back
+  </button>
+</div>
+<div class="container my-5">
+  <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px;">
+    <div class="card-header text-white text-center" style="background-color: #008383;">
+      <h4 class="mb-0">Booking Summary</h4>
+    </div>
+    <div class="card-body px-4 py-4">
+      <div class="mb-4">
+        <h4 class="fw-bold mb-2">{{ showtime?.title }}</h4>
+        <p class="text-muted mb-1 address-tooltip text-truncate" [attr.title]="showtime.address" style="max-width: 90%;">
+          <strong>{{ showtime?.theater_name }}</strong> — {{ showtime?.address }}
+        </p>
+        <p class="text-secondary mb-0">
+          <strong>
+            {{ showtime?.start_time | date:'EEEE, d MMMM y' }} |
+            {{ showtime?.start_time | date:'shortTime' }}
+          </strong>
+        </p>
+      </div>
+
+      <hr>
+
+      <div class="mb-3">
+        <p><strong>Seats Selected:</strong> {{ selectedSeats.length }}</p>
+        <table class="table table-borderless mb-0">
+          <tbody>
+            <tr>
+              <td>Base Ticket Price</td>
+              <td class="text-end">₹{{ totalPrice }}</td>
+            </tr>
+            <tr>
+              <td>Convenience Fee ({{ totalPrice > 1000 ? '10%' : '15%' }})</td>
+              <td class="text-end">₹{{ convenienceFee }}</td>
+            </tr>
+            <tr>
+              <td>GST (18% on fee)</td>
+              <td class="text-end">₹{{ gstOnFee }}</td>
+            </tr>
+            <tr *ngIf="applyLoyalty && loyaltyPointsValue > 0">
+              <td>Loyalty Points Discount</td>
+              <td class="text-end text-danger">− ₹{{ loyaltyPointsValue }}</td>
+            </tr>
+            <tr class="border-top">
+              <th>Total Payable</th>
+              <th class="text-end text-success">₹{{ grandTotal }}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="form-check my-3">
+        <input class="form-check-input" type="checkbox" id="useLoyalty" [(ngModel)]="applyLoyalty" (change)="onLoyaltyToggle()">
+        <label class="form-check-label" for="useLoyalty">
+          Use Loyalty Points {{loyaltyPointsValue}}
+        </label>
+      </div>
+
+      <div class="text-center mt-4">
+        <button class="btn px-4 py-2 btn-primary" (click)="proceedToPayment()">
+          Proceed to Payment
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Booking Confirmation Modal -->
+<div class="modal fade booking-confirmation"
+     id="bookingConfirmationModal"
+     tabindex="-1"
+     aria-labelledby="bookingConfirmationLabel"
+     aria-hidden="true"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-4">
+      <div class="modal-body">
+        <!-- Tick Icon -->
+        <div class="mb-3">
+          <svg (click)="onTickClick()"
+               xmlns="http://www.w3.org/2000/svg"
+               width="80"
+               height="80"
+               fill="#008383"
+               class="bi bi-check-circle-fill cursor-pointer"
+               viewBox="0 0 16 16"
+               title="Click to proceed">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.07 0l3.992-3.993a.75.75 0 1 0-1.06-1.06L7.5 9.439 5.525 7.464a.75.75 0 1 0-1.06 1.06l2.505 2.506z" />
+          </svg>
+        </div>
+
+        <h5 class="mb-2">Booking Confirmed!</h5>
+
+        <table class="table table-borderless mb-3">
+          <tbody>
+            <tr>
+              <td>Base Ticket Price</td>
+              <td class="text-end">₹{{ totalPrice }}</td>
+            </tr>
+            <tr>
+              <td>Convenience Fee ({{ totalPrice > 1000 ? '10%' : '15%' }})</td>
+              <td class="text-end">₹{{ convenienceFee }}</td>
+            </tr>
+            <tr>
+              <td>GST (18% on fee)</td>
+              <td class="text-end">₹{{ gstOnFee }}</td>
+            </tr>
+            <tr *ngIf="applyLoyalty && loyaltyPointsValue > 0">
+              <td>Loyalty Discount</td>
+              <td class="text-end text-danger">− ₹{{ loyaltyPointsValue }}</td>
+            </tr>
+            <tr class="border-top">
+              <th>Total Paid</th>
+              <th class="text-end text-success">₹{{ totalAmount }}</th>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Booking ID: <strong>{{ bookingId }}</strong></p>
+        <p>Payment ID: <strong>{{ razorpayId }}</strong></p>
+      </div>
+    </div>
+  </div>
+</div>

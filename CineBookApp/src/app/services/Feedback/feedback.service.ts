@@ -9,10 +9,10 @@ import { Feedbacks } from '../../interfaces/Feedbacks';
 export class FeedbackService {
   constructor(private http: HttpClient) { }
   getAllFeedbacks(): Observable<Feedbacks[]> {
-    return this.http.get<Feedbacks[]>("https://localhost:44325/api/Feedback/GetAllFeedbacks").pipe(catchError(this.errorHandler));
+    return this.http.get<Feedbacks[]>("http://cinebook.runasp.net/api/Feedback/GetAllFeedbacks").pipe(catchError(this.errorHandler));
   }
   deleteFeedbacks(id: number): Observable<string> {
-    return this.http.delete<string>("https://localhost:44325/api/Feedback/DeleteFeedback?feedbackId=" + id).pipe(catchError(this.errorHandler));
+    return this.http.delete<string>("http://cinebook.runasp.net/api/Feedback/DeleteFeedback?feedbackId=" + id).pipe(catchError(this.errorHandler));
   }
   errorHandler(error: HttpErrorResponse) {
     //To do implement necessary logic

@@ -1,0 +1,104 @@
+/* Overlay to blur background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+/* Common popup styles */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 360px;
+  padding: 30px 40px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+  transform: translate(-50%, -50%);
+  z-index: 1100;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #004d40; /* dark teal */
+  text-align: center;
+}
+
+  /* Headings */
+  .popup h2 {
+    margin-bottom: 25px;
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: #00796b; /* teal */
+  }
+
+  /* Labels */
+  .popup label {
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  /* Inputs */
+  .popup input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border: 2px solid #00796b;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+    .popup input:focus {
+      border-color: #004d40;
+      box-shadow: 0 0 8px #004d40aa;
+    }
+
+  /* Buttons */
+  .popup button {
+    width: 100%;
+    padding: 12px 0;
+    background-color: #00796b;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 121, 107, 0.4);
+  }
+
+    .popup button:hover:not(:disabled) {
+      background-color: #48a999; /* light teal */
+    }
+
+    .popup button:disabled {
+      background-color: #b2dfdb;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+/* Error message styling */
+.error {
+  color: #d32f2f; /* red */
+  font-weight: 600;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 420px) {
+  .popup {
+    width: 90vw;
+    padding: 20px 25px;
+  }
+}

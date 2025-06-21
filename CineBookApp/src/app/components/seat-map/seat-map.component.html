@@ -1,1 +1,129 @@
-<p>seat-map works!</p>
+<div class="back-button-container">
+  <button class="btn back-button" (click)="goBack()">
+    <i class="fa fa-arrow-left"></i> Back
+  </button>
+</div>
+<div class="container mt-5">
+  <div class="modal fade" id="seatCountModal"
+       tabindex="-1"
+       aria-labelledby="showtimeModalLabel"
+       aria-hidden="true" data-bs-backdrop="static"
+       data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-center" id="seatCountLabel">
+            How Many Seats?
+          </h5>
+        </div>
+        <div class="modal-body p-4">
+          <!-- Seat Count Buttons with Padding -->
+          <div class="btn-group mb-3 d-flex justify-content-center px-4"
+               role="group">
+            <button type="button"
+                    class="btn btn-outline-dark"
+                    [ngClass]="{'active': selectedSeatCount === n}"
+                    *ngFor="let n of seatCols"
+                    (click)="selectSeatCount(n)">
+              {{n}}
+            </button>
+          </div>
+
+          <!-- Pricing Labels with Spacing -->
+          <div class="d-flex justify-content-center gap-4 mt-3">
+            <p class="m-0">NORMAL RS.250</p>
+            <p class="m-0">EXECUTIVE RS.350</p>
+            <p class="m-0">PREMIUM RS.500</p>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-danger" (click)="confirmSeatCount()">Select Seats</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="seat-container">
+    <div class="edit-ticket-btn-container">
+      <button class="btn btn-outline-warning" (click)="openSeatCountModal()">
+        Edit Ticket {{selectedSeatCount}}
+      </button>
+    </div>
+    <div class="tier-label">PREMIUM Rs.500</div>
+    <ng-container *ngFor="let row of premiumRows">
+      <div class="seat-row" *ngIf="seatData[row]">
+        <span class="row-label">{{row}}</span>
+        <div class="seats">
+          <div *ngFor="let seat of seatData[row]"
+               class="seat"
+               [ngClass]="{
+         'booked':seat.isOccupies,
+         'selected':isSelected(seat.seatId)}"
+               (click)="toggleSeat(seat.seatId)">
+            {{seat.seatNumber}}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <div class="tier-label">EXECUTIVE Rs.350</div>
+    <ng-container *ngFor="let row of executiveRows">
+      <div class="seat-row" *ngIf="seatData[row]">
+        <span class="row-label">{{row}}</span>
+        <div class="seats">
+          <div *ngFor="let seat of seatData[row]"
+               class="seat"
+               [ngClass]="{
+        'booked':seat.isOccupies,
+        'selected':isSelected(seat.seatId)}
+        "
+               (click)="toggleSeat(seat.seatId)">
+            {{seat.seatNumber.replace(row,'')}}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="tier-label">NORMAL Rs.250</div>
+    <ng-container *ngFor="let row of normalRows">
+      <div class="seat-row" *ngIf="seatData[row]">
+        <span class="row-label">{{row}}</span>
+        <div class="seats">
+          <div *ngFor="let seat of seatData[row]"
+               class="seat"
+               [ngClass]="{
+        'booked':seat.isOccupies,
+        'selected':isSelected(seat.seatId)}
+        "
+               (click)="toggleSeat(seat.seatId)">
+            {{seat.seatNumber.replace(row,'')}}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <div class="screen">All Eyes This Way</div>
+    <div class="legend">
+      <div class="legend-box available"></div> Available
+      <div class="legend-box selected"></div> Selected
+      <div class="legend-box booked"></div> Sold
+    </div>
+  </div>
+  <div *ngIf="selectedSeatCount > 0 && selectedSeatLabels.size === selectedSeatCount"
+       class="proceed-popup fixed-bottom bg-white shadow-lg d-flex justify-content-between align-items-center px-4 py-2 border-top">
+
+    <div>
+      <strong>{{ selectedSeatLabels.size }} Seat(s) Selected</strong><br />
+      <small>Total: ₹{{ getTotalPrice() }}</small>
+    </div>
+    <button class="btn btn-success" (click)="proceedToPayment()">
+      Proceed
+    </button>
+  </div>
+
+</div>

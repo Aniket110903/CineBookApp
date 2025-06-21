@@ -14,7 +14,7 @@ export class ForgotPassService {
 
   constructor(private http: HttpClient) { }
   verifyResetCode(email: string, resetCode: string): Observable<VerifyResponse> {
-    return this.http.post<VerifyResponse>('https://localhost:44325/api/Users/VerifyResetCode', {
+    return this.http.post<VerifyResponse>('http://cinebook.runasp.net/api/Users/VerifyResetCode', {
       email,
       resetCode  // <- matches API definition exactly
     });
@@ -23,7 +23,7 @@ export class ForgotPassService {
 
 
   resetPassword(email: string, newPassword: string, confirmPassword: string): Observable<ResetPasswordRequest> {
-    return this.http.post<ResetPasswordRequest>('https://localhost:44325/api/Users/ResetPassword', {
+    return this.http.post<ResetPasswordRequest>('http://cinebook.runasp.net/api/Users/ResetPassword', {
       email,
       newPassword,
       confirmPassword

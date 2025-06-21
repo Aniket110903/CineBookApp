@@ -10,16 +10,16 @@ export class NotificationServService {
 
   constructor(private http: HttpClient) { }
   getNotification(userId: number) {
-    return this.http.get<any>("https://localhost:44325/api/Notification/GetNotifications?userId=" + userId).pipe(catchError(this.errorHandler));
+    return this.http.get<any>("http://cinebook.runasp.net/api/Notification/GetNotifications?userId=" + userId).pipe(catchError(this.errorHandler));
   }
   markAsRead(notificationId: number) {
-    return this.http.put<any>("https://localhost:44325/api/Notification/MarkAsRead?notificationId=" + notificationId, null).pipe(catchError(this.errorHandler));
+    return this.http.put<any>("http://cinebook.runasp.net/api/Notification/MarkAsRead?notificationId=" + notificationId, null).pipe(catchError(this.errorHandler));
   }
   markAllAsRead(userId: number) {
-    return this.http.put<any>("https://localhost:44325/api/Notification/MarkAllAsRead?userId=" + userId, null).pipe(catchError(this.errorHandler));
+    return this.http.put<any>("http://cinebook.runasp.net/api/Notification/MarkAllAsRead?userId=" + userId, null).pipe(catchError(this.errorHandler));
   }
   addnotifications(data: Notification) {
-    return this.http.post<string>("https://localhost:44325/api/Notification/AddNotification", data).pipe(catchError(this.errorHandler));
+    return this.http.post<string>("http://cinebook.runasp.net/api/Notification/AddNotification", data).pipe(catchError(this.errorHandler));
   }
 
   errorHandler(error: HttpErrorResponse) {

@@ -1,1 +1,64 @@
-<p>view-analytics works!</p>
+<div class="analytics-container">
+  <div class="mx-5">
+    <h4>📊 Booking</h4>
+    <div class="filter-row mx-4 px-">
+      <!-- Time Filter Buttons on Left -->
+      <div class="filter-buttons">
+        <button class="btn btn-primary" [class.active]="filterTime === '7days'" (click)="onTimeFilterChange('7days')">Last 7 Days</button>
+        <button class="btn btn-primary" [class.active]="filterTime === 'month'" (click)="onTimeFilterChange('month')">This Month</button>
+        <button class="btn btn-primary" [class.active]="filterTime === 'year'" (click)="onTimeFilterChange('year')">This Year</button>
+        <button class="btn btn-primary" [class.active]="filterTime === 'all'" (click)="onTimeFilterChange('all')">All Time</button>
+      </div>
+
+      <!-- Status Dropdown on Right -->
+      <select class="status-dropdown " [(ngModel)]="filterStatus" (change)="onStatusFilterChange(filterStatus)">
+        <option class="dropdown-item" value="All">All </option>
+        <option class="dropdown-item" value="Confirmed">Confirmed</option>
+        <option class="dropdown-item" value="Pending">Pending</option>
+        <option class="dropdown-item" value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+
+    <div class="charts-container">
+      <div class="chart-box">
+        <h3>Bar Chart</h3>
+        <canvas id="bookingBarChart" class="chart"></canvas>
+      </div>
+
+      <div class="chart-box">
+        <h3>Pie Chart</h3>
+        <canvas id="bookingPieChart" class="chart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="mx-5">
+    <h4>🎬 Movies</h4>
+    <div class="filter-row mx-4 px-">
+      <div class="filter-buttons">
+        <button class="btn btn-primary" [class.active]="movieTimeFilter === '7days'" (click)="movieTimeFilter = '7days'; createMovieCharts()">Last 7 Days</button>
+        <button class="btn btn-primary" [class.active]="movieTimeFilter === 'month'" (click)="movieTimeFilter = 'month'; createMovieCharts()">This Month</button>
+        <button class="btn btn-primary" [class.active]="movieTimeFilter === 'year'" (click)="movieTimeFilter = 'year'; createMovieCharts()">This Year</button>
+        <button class="btn btn-primary" [class.active]="movieTimeFilter === 'all'" (click)="movieTimeFilter = 'all'; createMovieCharts()">All Time</button>
+      </div>
+
+      <select class="status-dropdown" [(ngModel)]="movieFilterType" (change)="createMovieCharts()">
+        <option value="reviews">Most Reviews</option>
+        <option value="rating">Highest Rating</option>
+      </select>
+    </div>
+
+
+    <div class="charts-container">
+      <div class="chart-box">
+        <h3>Movie Bar Chart</h3>
+        <canvas id="movieBarChart" class="chart"></canvas>
+      </div>
+
+      <div class="chart-box">
+        <h3>Movie Pie Chart</h3>
+        <canvas id="moviePieChart" class="chart"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>

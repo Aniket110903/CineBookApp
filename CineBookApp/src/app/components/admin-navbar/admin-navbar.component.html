@@ -1,1 +1,27 @@
-<p>admin-navbar works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-teal px-4 sticky-top">
+  <a class="navbar-brand d-flex align-items-center gap-1" href="/admin">
+    <span class="fw-bold fs-3">Cine</span>
+    <img src="assets/CineBookLogo.png" height="30" alt="CineBook Logo">
+    <span class="fw-bold fs-3">Book</span>
+  </a>
+
+  <div class="collapse navbar-collapse justify-content-between ms-4">
+    <div class="navbar-nav d-flex gap-3">
+      <a class="nav-link" (click)="NavigateToMovie()">Manage Movies</a>
+      <a class="nav-link" (click)="NavigateToTheater()">Manage Theaters</a>
+      <a class="nav-link" (click)="NavigateToManageShowTime()">Manage ShowTime</a>
+      <a class="nav-link" (click)="NavigateToManageFeedbacks()">Manage Feedbacks</a>
+    </div>
+
+    <div class="dropdown">
+      <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Admin
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><button class="dropdown-item" type="button" (click)="EditProfle()">View profile</button></li>
+        <li><button class="dropdown-item" type="button" (click)="goToChangePassword()">Change password</button></li>
+        <li><button class="dropdown-item" type="button" (click)="logout()">Logout</button></li>
+      </ul>
+    </div>
+  </div>
+</nav>

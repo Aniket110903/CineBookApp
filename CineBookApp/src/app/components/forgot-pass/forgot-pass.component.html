@@ -1,1 +1,35 @@
-<p>forgot-pass works!</p>
+<!-- Overlay -->
+<div class="overlay" *ngIf="showVerification || showResetPassword"></div>
+
+<!-- Verification Popup -->
+<div class="popup" *ngIf="showVerification" @fadeIn>
+  <h2>Verify Your Credentials</h2>
+  <form (ngSubmit)="verifyCode()" #verifyForm="ngForm" novalidate>
+    <label>Email</label>
+    <input type="email" [(ngModel)]="verificationEmail" name="email" required email />
+
+    <label>Reset Code</label>
+    <input type="text" [(ngModel)]="resetCode" name="resetCode" required minlength="4" maxlength="4" />
+
+    <button type="submit" [disabled]="!verifyForm.form.valid">Verify Code</button>
+  </form>
+  <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+</div>
+
+<!-- Password Reset Popup -->
+<div class="popup" *ngIf="showResetPassword" @fadeIn>
+  <h2>Reset Password</h2>
+  <form (ngSubmit)="resetPassword()" #resetForm="ngForm" novalidate>
+    <label>Email</label>
+    <input type="email" [(ngModel)]="resetEmail" name="email" required email readonly />
+
+    <label>New Password</label>
+    <input type="password" [(ngModel)]="newPassword" name="newPassword" required minlength="6" />
+
+    <label>Confirm Password</label>
+    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required [pattern]="newPassword" />
+
+    <button type="submit" [disabled]="!resetForm.form.valid || newPassword !== confirmPassword">Reset Password</button>
+  </form>
+  <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+</div>

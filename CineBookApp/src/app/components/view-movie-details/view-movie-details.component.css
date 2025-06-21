@@ -1,0 +1,50 @@
+.star-rating span {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: gray;
+  margin-right: 4px;
+}
+
+  .star-rating span.active {
+    color: gold;
+  }
+
+.movie-poster {
+  height: 100%; /* Makes image fill the parent column */
+  max-height: 400px; /* Controls max height to keep layout tidy */
+  width: 100%; /* Ensures it spans the column width */
+  object-fit: cover; /* Maintains aspect ratio and covers space */
+  border-radius: 0.5rem 0 0 0.5rem; /* Optional: match Bootstrap rounded-start */
+}
+
+.custom-header {
+  background-color: teal; /* light gray background */
+  border-bottom: 2px solid teal;
+}
+
+.title-colored {
+  color: white; /* Bootstrap blue or choose any color you like */
+  font-weight: bold;
+}
+
+.white-close {
+  filter: brightness(0) invert(1); /* Inverts color to white */
+}
+
+.back-button-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.back-button {
+  background-color: white;
+  color: black;
+  border: none;
+  position: absolute;
+  top: -39px; /* Slight upward offset */
+  left: 20px; /* Slight left offset */
+  padding: 6px 12px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+}

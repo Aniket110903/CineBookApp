@@ -1,1 +1,28 @@
-<p>notification-page works!</p>
+<!-- notifications.component.html -->
+<div class="back-button-container ms-2">
+  <button class="btn back-button" (click)="goBack()">
+    <i class="fa fa-arrow-left"></i> Back
+  </button>
+</div>
+<div class="notifications-container">
+  <div class="header">
+    <h3>Notifications</h3>
+    <button (click)="markAllAsRead()" [disabled]="isAllRead==true" class="mark-all-btn">Mark All as Read</button>
+  </div>
+
+  <div *ngIf="notifications.length === 0" class="no-notifications">
+    <p>No new notifications!</p>
+  </div>
+
+  <div *ngFor="let note of notifications" class="notification" [class.unread]="!note.isRead">
+    <div class="notification-header">
+      <div class="type">{{ note.notificationType }}</div>
+      <div class="time">{{ note.sentTime | date: 'short' }}</div>
+    </div>
+    <div class="message">{{ note.message }}</div>
+
+    <div class="actions">
+      <button (click)="markAsRead(note)" [disabled]="note.isRead == 1" class="mark-read-btn">Mark as Read</button>
+    </div>
+  </div>
+</div>

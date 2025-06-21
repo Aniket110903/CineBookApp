@@ -1,1 +1,163 @@
-<p>manage-showtimes works!</p>
+<div class="back-button-container">
+  <button class="btn back-button" (click)="goBack()">
+    <i class="fa fa-arrow-left"></i> Back
+  </button>
+</div>
+<div class="m-4">
+  <h2 class="mx-4">Manage Show Time</h2>
+  <div class="filter-bar mx-4 d-flex justify-content-between align-items-center p-3 mb-3 shadow-sm bg-white rounded">
+    <!-- Left side: Filters -->
+    <div class="filters d-flex gap-3">
+      <div class="form-group mb-0">
+        <label for="theaterSelect" class="form-label">Theater:</label>
+        <select #theaterSelect id="theaterSelect" class="form-select"
+                (change)="onChange(theaterSelect.value, MovieSelect.value)">
+          <option [value]="0">All</option>
+          <option *ngFor="let theater of theaters" [value]="theater.theaterId">
+            {{ theater.name }} ({{theater.location}})
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="MovieSelect" class="form-label">Movie:</label>
+        <select #MovieSelect id="MovieSelect" class="form-select"
+                (change)="onChange(theaterSelect.value, MovieSelect.value)">
+          <option [value]="0">All</option>
+          <option *ngFor="let movie of movies" [value]="movie.movieId">
+            {{ movie.title }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Right side: Buttons -->
+    <div class="action-buttons d-flex gap-2">
+      <button class="btn btn-primary" (click)="openAddModal()">Add Showtime</button>
+      <button class="btn btn-danger" (click)="deleteAllPrevShowTime()">Delete Previous Showtime</button>
+    </div>
+  </div>
+  <div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4 mt-4" *ngFor="let showtime of FilterShowTimming">
+          <div class="card card-gradient shadow-sm" (click)="openEditModal(showtime)">
+            <div class="card-body">
+              <!-- Theater name + location -->
+              <h5 class="card-title text-light">
+                {{ showtime.theaterName }}
+                <span class="text-dark" style="font-size: 0.9em;">
+                  ({{ showtime.location }})
+                </span>
+
+              </h5>
+              <!-- Movie Name -->
+              <h5 class="card-subtitle mb-2" style="color: #C2FFC7; font-weight: 600; ">🎬{{ showtime.MovieName }}</h5>
+              <!-- Theater address -->
+              <p class="card-text text-light mb-2">
+                <strong>Address:</strong><br>
+                <span class="text-dark text-truncate-address" [attr.title]="showtime.theaterAddress">
+                  {{ showtime.theaterAddress?.length > 20 ? (showtime.theaterAddress | slice:0:35) + '...' : showtime.theaterAddress }}
+                </span>
+              </p>
+
+
+
+              <!-- Showtime -->
+              <p class="card-text">
+                <strong>Showtime:</strong><br>
+                {{ showtime.startTime | date:'shortTime' }} - {{ showtime.endTime | date:'shortTime' }}<br>
+                <strong class="text-dark">
+                  {{ showtime.startTime | date:'fullDate' }}
+                </strong>
+              </p>
+
+              <p class="card-text text-dark">
+                <small>Showtime ID:</small> {{ showtime.showtimeId }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="showtimeModal" tabindex="-1" aria-labelledby="showtimeModalLabel" aria-hidden="true" data-bs-backdrop="static"
+     data-bs-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form (ngSubmit)="saveShowtime(showtimeForm)" #showtimeForm="ngForm">
+        <div class="modal-header card-gradient">
+          <h5 class="modal-title" id="showtimeModalLabel">{{ editingShowtime ? 'Edit' : 'Add' }} Showtime</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeModal(showtimeForm)" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="theaterSelect" class="form-label">Theater</label>
+            <select class="form-select" [(ngModel)]="modalData.theaterId" name="theaterId" ngModel #theater="ngModel" required>
+              <option *ngFor="let theater of theaters" [value]="theater.theaterId">{{ theater.name }}({{theater.location}})</option>
+            </select>
+            <div *ngIf="theater.errors && (theater.dirty || theater.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!theater.errors['required']">
+                <p>&nbsp;Theater is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="mb-3">
+            <label for="movieSelect" class="form-label">Movie</label>
+            <select class="form-select" [(ngModel)]="modalData.movieId" name="movieId" ngModel #movieSelect="ngModel" required>
+              <option *ngFor="let movie of movies" [value]="movie.movieId">{{ movie.title }}</option>
+            </select>
+            <div *ngIf="movieSelect.errors && (movieSelect.dirty || movieSelect.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!movieSelect.errors['required']">
+                <p>&nbsp;Movie is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="mb-3">
+            <label for="startTime" class="form-label">Start Time</label>
+            <input type="datetime-local" #startTime="ngModel" ngModel class="form-control" [(ngModel)]="modalData.startTime" name="startTime" required [min]="todayDate">
+            <div *ngIf="startTime.errors && (startTime.dirty || startTime.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!startTime.errors['required']">
+                <p>&nbsp;StartTime is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="mb-3">
+            <label for="endTime" class="form-label">End Time</label>
+            <input type="datetime-local" class="form-control" #endTime="ngModel" ngModel [(ngModel)]="modalData.endTime" name="endTime" required [min]="modalData.startTime">
+            <div *ngIf="endTime.errors && (endTime.dirty || endTime.touched)" style="text-align:left; padding-top:5px; color:red;">
+              <div [hidden]="!endTime.errors['required']">
+                <p>&nbsp;EndTime is mandatory</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div *ngIf="!editingShowtime" class="modal-footer">
+          <button type="submit" class="btn btn-success" [disabled]="!showtimeForm['form'].valid">Save</button>
+          <button type="button" class="btn btn-secondary " (click)="closeModal(showtimeForm)" data-bs-dismiss="modal">Cancel</button>
+        </div>
+
+        <div *ngIf="editingShowtime" class="modal-footer d-flex justify-content-between">
+          <!-- Delete button (left side) -->
+          <button *ngIf="editingShowtime" type="button" class="btn btn-danger" (click)="deleteShowtime(modalData.showtimeId)">Delete Showtime</button>
+          <!-- Save and Cancel buttons (right side) -->
+          <div>
+            <button type="submit" class="btn btn-success" [disabled]="!showtimeForm['form'].valid">Save</button>
+            <button type="button" class="btn btn-secondary ms-2" (click)="closeModal(showtimeForm)" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

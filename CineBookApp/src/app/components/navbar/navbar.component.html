@@ -1,1 +1,121 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-teal px-4 sticky-top shadow-sm">
+  <div class="container-fluid">
+
+    <!-- Logo + Text -->
+    <a class="navbar-brand d-flex align-items-center gap-1" href="/">
+      <span class="fw-bold fs-3">Cine</span>
+      <img src="assets/CineBookLogo.png" height="30" alt="CineBook Logo">
+      <span class="fw-bold fs-3">Book</span>
+    </a>
+
+    <!-- Toggler for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar content -->
+    <div class="collapse navbar-collapse" id="userNavbar">
+
+      <!-- Centered Search + Location -->
+      <div class="mx-auto d-flex align-items-center gap-3 position-relative">
+        <input class="form-control"
+               style="width: 600px;"
+               type="search"
+               placeholder="Search for Movies"
+               [(ngModel)]="searchQuery"
+               (input)="filterMovies()"
+               (blur)="hideDropdownDelayed()"
+               (focus)="showDropdown = true">
+
+        <!-- Dropdown -->
+        <ul *ngIf="showDropdown && filteredMovies.length > 0"
+            class="list-group position-absolute"
+            style="top: 100%; z-index: 1000; width: 600px;">
+          <li *ngFor="let movie of filteredMovies"
+              class="list-group-item list-group-item-action py-1 px-2"
+              (mousedown)="navigateToMovie(movie.movieId)">
+            {{ movie.title }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Auth Dropdown on Right -->
+      <div class="dropdown">
+        <button class="btn btn-outline-light dropdown-toggle text-truncate"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style="width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          {{ selectedLocation }}
+        </button>
+        <ul class="dropdown-menu">
+          <li *ngFor="let location of locations">
+            <a class="dropdown-item" (click)="selectLocation(location)">
+              {{ location }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <button *ngIf="isLoggedIn" (click)="goToNotification()" type="button" class="ms-2 btn btn-outline-light position-relative" style="height:37px" title="Notifications">
+        <i class="bi bi-bell-fill fs-5"></i>
+        <span *ngIf="unreadNotificationsCount > 0"
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{ unreadNotificationsCount }}
+          <span class="visually-hidden">unread notifications</span>
+        </span>
+      </button>
+      <div *ngIf="!isLoggedIn" class="ms-2 dropdown">
+        <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          Account
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><button class="dropdown-item" type="button" (click)="navigateToLogin()">Log In</button></li>
+          <li><button class="dropdown-item" type="button" (click)="navigateToSignup()">Register</button></li>
+        </ul>
+      </div>
+
+
+      <div *ngIf="isLoggedIn" class="ms-2 dropdown">
+        <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ userName }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><button class="dropdown-item" type="button" (click)="EditProfle()">View profile</button></li>
+          <li><button class="dropdown-item" type="button" (click)="goToBookingHistory()">Booking History</button></li>
+          <li><button class="dropdown-item" type="button" (click)="goToChangePassword()">Change password</button></li>
+          <li><button class="dropdown-item" type="button" (click)="logout()">Logout</button></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="modal fade" id="locationModal"
+     tabindex="-1"
+     aria-labelledby="locationModalLabel"
+     aria-hidden="true"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+  <div class="modal-dialog modal-lg modal-custom">
+    <div class="modal-content">
+      <div class="modal-header bg-teal">
+        <h5 class="modal-title text-center w-100 text-light" id="locationModalLabel">
+          Select Your Location
+        </h5>
+      </div>
+
+      <div class="modal-body p-4">
+        <div *ngFor="let chunk of chunkedLocations" class="btn-group d-flex flex-wrap justify-content-center gap-2 mb-2">
+          <button *ngFor="let city of chunk"
+                  type="button"
+                  class="btn location-btn"
+                  (click)="selectLocation(city)">
+            {{ city }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

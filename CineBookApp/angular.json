@@ -25,12 +25,12 @@
               "src/assets"
             ],
             "styles": [
-              "C:/node_modules/bootstrap/dist/css/bootstrap.min.css",
-
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/font-awesome/css/font-awesome.css",
               "src/styles.css"
             ],
             "scripts": [
-              "C:/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {

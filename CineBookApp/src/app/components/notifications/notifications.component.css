@@ -1,0 +1,72 @@
+.notification-container {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  width: 320px;
+  /* background removed */
+  /* backdrop-filter removed */
+  box-shadow: none; /* Optional: Remove shadow from container */
+  border-radius: 0; /* Optional: Remove border radius */
+  padding: 0; /* Remove padding */
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateX(0);
+}
+
+  .notification-container.ng-animating-out {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+.notification {
+  position: relative;
+  background: rgba(255 255 255 / 88%); /* translucent glass look */
+  margin-bottom: 10px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+  .notification.read {
+    opacity: 0.5;
+  }
+
+.type {
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #555;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.message {
+  font-size: 1rem;
+  color: #000;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px; /* control max width */
+}
+
+.time {
+  font-size: 0.7rem;
+  color: #555;
+  margin-top: 6px;
+  text-align: right;
+}
+
+.close-btn {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #888;
+  font-weight: bold;
+}

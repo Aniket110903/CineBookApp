@@ -1,0 +1,13 @@
+.card-gradient {
+  background: linear-gradient(135deg, #076266f2, #a6fbe4); /* Gradient colors */
+  color: white;
+  border: none;
+}
+
+.modal-footer .btn {
+  min-width: 120px; /* Set a minimum width for buttons if needed */
+}
+
+.modal-footer .btn-danger {
+  margin-right: auto; /* Ensures the Delete button stays on the left */
+}

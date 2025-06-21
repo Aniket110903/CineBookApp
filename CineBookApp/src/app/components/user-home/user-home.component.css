@@ -1,0 +1,25 @@
+
+.movie-carousel-wrapper {
+  overflow-x: auto;
+  padding: 20px;
+  white-space: nowrap;
+}
+
+.movie-carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.carousel-img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+  .carousel-img:hover {
+    transform: scale(1.05);
+  }
