@@ -1,68 +1,265 @@
 .carousel-wrapper {
   width: 100%;
-  height: 400px; /* or set a fixed height like 400px */
+  height: 400px;
   display: flex;
   justify-content: center;
-  align-items: center; /* Vertically centers .carousel-container */
+  align-items: center;
   margin: 0px 0;
   overflow: hidden;
 }
 
-
-
 .carousel-container {
   display: flex;
-  align-items: center; /* Vertically center slides inside container if needed */
+  align-items: center;
   gap: 20px;
   transition: transform 0.5s ease-in-out;
+  width: 100%;
+  justify-content: center;
 }
 
-
-
+.carousel-slide {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
 
   .carousel-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-/*    border-radius: 10px;*/
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
-    
 
-/* FAR LEFT */
-.far-left {
-  width: 250px;
-  height: 320px;
-  clip-path: polygon(0% 0%, 100% 4%, 100% 96%, 0% 100%);
-}
-
-/* LEFT */
-.left {
-  width: 250px;
-  height: 300px;
-  clip-path: polygon(0% 1%, 100% 5%, 100% 95%, 0% 99%);
-}
-
-/* CENTER (Smallest) */
-.center {
-  width: 250px;
-  height: 270px;
-}
-
-/* RIGHT */
-.right {
-  width: 250px;
-  height: 300px;
-  clip-path: polygon(0% 5%, 100% 1%, 100% 99%, 0% 95%);
-}
-
-/* FAR RIGHT */
-.far-right {
-  width: 250px;
-  height: 320px;
-  clip-path: polygon(0% 4%, 100% 0%, 100% 100%, 0% 96%);
-}
-  .far-right:hover, .right:hover, .center:hover, .left:hover, .far-left:hover{
-    transform: scale(1.1);
-    transition: ease-in-out 0.3s;
+/* Desktop styles */
+@media (min-width: 769px) {
+  .carousel-wrapper {
+    height: 400px;
   }
+
+  .carousel-container {
+    gap: 20px;
+  }
+
+  /* FAR LEFT */
+  .far-left {
+    width: 250px;
+    height: 320px;
+    clip-path: polygon(0% 0%, 100% 4%, 100% 96%, 0% 100%);
+  }
+
+  /* LEFT */
+  .left {
+    width: 250px;
+    height: 300px;
+    clip-path: polygon(0% 1%, 100% 5%, 100% 95%, 0% 99%);
+  }
+
+  /* CENTER */
+  .center {
+    width: 250px;
+    height: 270px;
+  }
+
+  /* RIGHT */
+  .right {
+    width: 250px;
+    height: 300px;
+    clip-path: polygon(0% 5%, 100% 1%, 100% 99%, 0% 95%);
+  }
+
+  /* FAR RIGHT */
+  .far-right {
+    width: 250px;
+    height: 320px;
+    clip-path: polygon(0% 4%, 100% 0%, 100% 100%, 0% 96%);
+  }
+
+    .far-right:hover, .right:hover, .center:hover, .left:hover, .far-left:hover {
+      transform: scale(1.1);
+      transition: ease-in-out 0.3s;
+    }
+}
+
+/* Tablet styles */
+@media (min-width: 481px) and (max-width: 768px) {
+  .carousel-wrapper {
+    height: 300px;
+  }
+
+  .carousel-container {
+    gap: 15px;
+  }
+
+  /* FAR LEFT */
+  .far-left {
+    width: 180px;
+    height: 220px;
+    clip-path: polygon(0% 0%, 100% 6%, 100% 94%, 0% 100%);
+  }
+
+  /* LEFT */
+  .left {
+    width: 180px;
+    height: 200px;
+    clip-path: polygon(0% 2%, 100% 7%, 100% 93%, 0% 98%);
+  }
+
+  /* CENTER */
+  .center {
+    width: 180px;
+    height: 170px;
+  }
+
+  /* RIGHT */
+  .right {
+    width: 180px;
+    height: 200px;
+    clip-path: polygon(0% 7%, 100% 2%, 100% 98%, 0% 93%);
+  }
+
+  /* FAR RIGHT */
+  .far-right {
+    width: 180px;
+    height: 220px;
+    clip-path: polygon(0% 6%, 100% 0%, 100% 100%, 0% 94%);
+  }
+
+    .far-right:hover, .right:hover, .center:hover, .left:hover, .far-left:hover {
+      transform: scale(1.05);
+      transition: ease-in-out 0.3s;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+  .carousel-wrapper {
+    height: 250px;
+  }
+
+  .carousel-container {
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  /* Show only 3 slides on mobile for better visibility */
+  .far-left, .far-right {
+    display: none;
+  }
+
+  /* LEFT */
+  .left {
+    width: 120px;
+    height: 160px;
+    clip-path: polygon(0% 3%, 100% 8%, 100% 92%, 0% 97%);
+  }
+
+  /* CENTER */
+  .center {
+    width: 120px;
+    height: 140px;
+  }
+
+  /* RIGHT */
+  .right {
+    width: 120px;
+    height: 160px;
+    clip-path: polygon(0% 8%, 100% 3%, 100% 97%, 0% 92%);
+  }
+
+    /* Reduce hover effect on mobile */
+    .right:hover, .center:hover, .left:hover {
+      transform: scale(1.02);
+      transition: ease-in-out 0.3s;
+    }
+}
+
+/* Extra small mobile screens */
+@media (max-width: 320px) {
+  .carousel-wrapper {
+    height: 200px;
+  }
+
+  .carousel-container {
+    gap: 8px;
+    padding: 0 5px;
+  }
+
+  /* LEFT */
+  .left {
+    width: 90px;
+    height: 120px;
+  }
+
+  /* CENTER */
+  .center {
+    width: 110px;
+    height: 100px;
+  }
+
+  /* RIGHT */
+  .right {
+    width: 90px;
+    height: 120px;
+  }
+}
+
+/* Navigation buttons (mobile only) */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+  .nav-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+.nav-btn-prev {
+  left: 10px;
+}
+
+.nav-btn-next {
+  right: 10px;
+}
+
+/* Dots indicator */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+  .dot.active {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .dot:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+/* Make carousel wrapper relative for absolute positioning */
+.carousel-wrapper {
+  position: relative;
+}

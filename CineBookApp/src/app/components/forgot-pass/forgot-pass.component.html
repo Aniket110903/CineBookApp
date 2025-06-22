@@ -3,6 +3,7 @@
 
 <!-- Verification Popup -->
 <div class="popup" *ngIf="showVerification" @fadeIn>
+  
   <h2>Verify Your Credentials</h2>
   <form (ngSubmit)="verifyCode()" #verifyForm="ngForm" novalidate>
     <label>Email</label>
@@ -12,6 +13,11 @@
     <input type="text" [(ngModel)]="resetCode" name="resetCode" required minlength="4" maxlength="4" />
 
     <button type="submit" [disabled]="!verifyForm.form.valid">Verify Code</button>
+    <div class="back-button-container">
+      <button class="btn back-button" (click)="goBack()">
+        <i class="fa fa-arrow-left"></i> Back
+      </button>
+    </div>
   </form>
   <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
 </div>

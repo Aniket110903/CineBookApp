@@ -93,4 +93,7 @@ export class ForgotPassComponent {
       }
     );
   }
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
 }

@@ -23,3 +23,35 @@
   .carousel-img:hover {
     transform: scale(1.05);
   }
+/* Default margin for desktop */
+h2 {
+  margin: 3rem 2rem; /* 48px top/bottom, 32px left/right */
+}
+
+/* Laptop/Medium screens */
+@media (min-width: 769px) and (max-width: 1024px) {
+  h2 {
+    margin: 2rem 1.5rem; /* 32px top/bottom, 24px left/right */
+  }
+}
+
+/* Tablet screens */
+@media (min-width: 481px) and (max-width: 768px) {
+  h2 {
+    margin: 1.5rem 1rem; /* 24px top/bottom, 16px left/right */
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 480px) {
+  h2 {
+    margin: 1rem 0.75rem; /* 16px top/bottom, 12px left/right */
+  }
+}
+
+/* Extra small mobile screens */
+@media (max-width: 320px) {
+  h2 {
+    margin: 0.75rem 0.5rem; /* 12px top/bottom, 8px left/right */
+  }
+}

@@ -47,6 +47,15 @@ namespace CineBookServices
             );
             app.UseAuthorization();
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.MapControllers();
+
+            // 👇 This is the important part
+            app.MapFallbackToFile("index.html");
 
             app.MapControllers();
 

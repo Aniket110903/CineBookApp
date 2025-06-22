@@ -1,24 +1,28 @@
+
 <div class="back-button-container">
   <button class="btn back-button" (click)="goBack()">
     <i class="fa fa-arrow-left"></i> Back
   </button>
 </div>
-<div class="container mt-5">
+
+<div class="container-fluid mt-3">
+  <!-- Responsive Modal for Seat Count Selection -->
   <div class="modal fade" id="seatCountModal"
        tabindex="-1"
        aria-labelledby="showtimeModalLabel"
-       aria-hidden="true" data-bs-backdrop="static"
+       aria-hidden="true"
+       data-bs-backdrop="static"
        data-bs-keyboard="false">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" >
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-center" id="seatCountLabel">
+        <div class="modal-header text-center"style="color:white;background-color:teal">
+          <h5 class="modal-title w-100" id="seatCountLabel">
             How Many Seats?
           </h5>
         </div>
-        <div class="modal-body p-4">
-          <!-- Seat Count Buttons with Padding -->
-          <div class="btn-group mb-3 d-flex justify-content-center px-4"
+        <div class="modal-body p-3">
+          <!-- Responsive Seat Count Buttons -->
+          <div class="btn-group mb-4 d-flex justify-content-center flex-wrap px-2"
                role="group">
             <button type="button"
                     class="btn btn-outline-dark"
@@ -29,101 +33,132 @@
             </button>
           </div>
 
-          <!-- Pricing Labels with Spacing -->
-          <div class="d-flex justify-content-center gap-4 mt-3">
-            <p class="m-0">NORMAL RS.250</p>
-            <p class="m-0">EXECUTIVE RS.350</p>
-            <p class="m-0">PREMIUM RS.500</p>
+          <!-- Responsive Pricing Labels -->
+          <div class="d-flex justify-content-center gap-4 mt-3 flex-wrap">
+            <p class="m-0 text-center"><small>NORMAL<br><strong>RS.250</strong></small></p>
+            <p class="m-0 text-center"><small>EXECUTIVE<br><strong>RS.350</strong></small></p>
+            <p class="m-0 text-center"><small>PREMIUM<br><strong>RS.500</strong></small></p>
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-danger" (click)="confirmSeatCount()">Select Seats</button>
+          <button type="button"
+                  class="btn btn-danger"
+                  (click)="confirmSeatCount()"
+                  [disabled]="selectedSeatCount === 0">
+            Select Seats
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-
-
-
-
+  <!-- Main Seat Selection Container -->
   <div class="seat-container">
+    <!-- Edit Ticket Button -->
     <div class="edit-ticket-btn-container">
-      <button class="btn btn-primary" (click)="openSeatCountModal()">
-        Edit Ticket {{selectedSeatCount}}
+      <button class="btn btn-primary btn-sm" (click)="openSeatCountModal()">
+        <i class="fa fa-edit me-1"></i>Edit Ticket ({{selectedSeatCount}})
       </button>
     </div>
-    <div class="tier-label">PREMIUM Rs.500</div>
-    <ng-container *ngFor="let row of premiumRows">
-      <div class="seat-row" *ngIf="seatData[row]">
-        <span class="row-label">{{row}}</span>
-        <div class="seats">
-          <div *ngFor="let seat of seatData[row]"
-               class="seat"
-               [ngClass]="{
-         'booked':seat.isOccupies,
-         'selected':isSelected(seat.seatId)}"
-               (click)="toggleSeat(seat.seatId)">
-            {{seat.seatNumber}}
+
+    <!-- Wrapper for synchronized horizontal scrolling -->
+    <div class="seats-wrapper">
+      <div class="seats-inner">
+
+        <!-- Premium Seats Section -->
+        <div class="tier-label">PREMIUM Rs.500</div>
+        <ng-container *ngFor="let row of premiumRows">
+          <div class="seat-row" *ngIf="seatData[row]">
+            <span class="row-label">{{row}}</span>
+            <div class="seats">
+              <div *ngFor="let seat of seatData[row]"
+                   class="seat"
+                   [ngClass]="{
+                     'booked': seat.isOccupies,
+                     'selected': isSelected(seat.seatId)
+                   }"
+                   (click)="toggleSeat(seat.seatId)"
+                   [attr.aria-label]="'Seat ' + seat.seatNumber + (seat.isOccupies ? ' - Booked' : isSelected(seat.seatId) ? ' - Selected' : ' - Available')">
+                {{seat.seatNumber}}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </ng-container>
+        </ng-container>
 
-
-    <div class="tier-label">EXECUTIVE Rs.350</div>
-    <ng-container *ngFor="let row of executiveRows">
-      <div class="seat-row" *ngIf="seatData[row]">
-        <span class="row-label">{{row}}</span>
-        <div class="seats">
-          <div *ngFor="let seat of seatData[row]"
-               class="seat"
-               [ngClass]="{
-        'booked':seat.isOccupies,
-        'selected':isSelected(seat.seatId)}
-        "
-               (click)="toggleSeat(seat.seatId)">
-            {{seat.seatNumber.replace(row,'')}}
+        <!-- Executive Seats Section -->
+        <div class="tier-label">EXECUTIVE Rs.350</div>
+        <ng-container *ngFor="let row of executiveRows">
+          <div class="seat-row" *ngIf="seatData[row]">
+            <span class="row-label">{{row}}</span>
+            <div class="seats">
+              <div *ngFor="let seat of seatData[row]"
+                   class="seat"
+                   [ngClass]="{
+                     'booked': seat.isOccupies,
+                     'selected': isSelected(seat.seatId)
+                   }"
+                   (click)="toggleSeat(seat.seatId)"
+                   [attr.aria-label]="'Seat ' + seat.seatNumber.replace(row,'') + (seat.isOccupies ? ' - Booked' : isSelected(seat.seatId) ? ' - Selected' : ' - Available')">
+                {{seat.seatNumber.replace(row,'')}}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </ng-container>
-    <div class="tier-label">NORMAL Rs.250</div>
-    <ng-container *ngFor="let row of normalRows">
-      <div class="seat-row" *ngIf="seatData[row]">
-        <span class="row-label">{{row}}</span>
-        <div class="seats">
-          <div *ngFor="let seat of seatData[row]"
-               class="seat"
-               [ngClass]="{
-        'booked':seat.isOccupies,
-        'selected':isSelected(seat.seatId)}
-        "
-               (click)="toggleSeat(seat.seatId)">
-            {{seat.seatNumber.replace(row,'')}}
+        </ng-container>
+
+        <!-- Normal Seats Section -->
+        <div class="tier-label">NORMAL Rs.250</div>
+        <ng-container *ngFor="let row of normalRows">
+          <div class="seat-row" *ngIf="seatData[row]">
+            <span class="row-label">{{row}}</span>
+            <div class="seats">
+              <div *ngFor="let seat of seatData[row]"
+                   class="seat"
+                   [ngClass]="{
+                     'booked': seat.isOccupies,
+                     'selected': isSelected(seat.seatId)
+                   }"
+                   (click)="toggleSeat(seat.seatId)"
+                   [attr.aria-label]="'Seat ' + seat.seatNumber.replace(row,'') + (seat.isOccupies ? ' - Booked' : isSelected(seat.seatId) ? ' - Selected' : ' - Available')">
+                {{seat.seatNumber.replace(row,'')}}
+              </div>
+            </div>
           </div>
-        </div>
+        </ng-container>
+
       </div>
-    </ng-container>
+    </div>
 
-
+    <!-- Screen Indicator -->
     <div class="screen">All Eyes This Way</div>
+
+    <!-- Legend -->
     <div class="legend">
-      <div class="legend-box available"></div> Available
-      <div class="legend-box selected"></div> Selected
-      <div class="legend-box booked"></div> Sold
+      <div class="d-flex align-items-center">
+        <div class="legend-box available"></div>
+        <span>Available</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <div class="legend-box selected"></div>
+        <span>Selected</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <div class="legend-box booked"></div>
+        <span>Sold</span>
+      </div>
     </div>
   </div>
+
+  <!-- Responsive Proceed Popup -->
   <div *ngIf="selectedSeatCount > 0 && selectedSeatLabels.size === selectedSeatCount"
-       class="proceed-popup fixed-bottom bg-white shadow-lg d-flex justify-content-between align-items-center px-4 py-2 border-top">
-
-    <div>
-      <strong>{{ selectedSeatLabels.size }} Seat(s) Selected</strong><br />
-      <small>Total: ₹{{ getTotalPrice() }}</small>
+       class="proceed-popup">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center w-100">
+      <div class="text-center text-md-start mb-2 mb-md-0">
+        <strong>{{ selectedSeatLabels.size }} Seat(s) Selected</strong><br />
+        <small>Total: ₹{{ getTotalPrice() }}</small>
+      </div>
+      <button class="btn btn-primary" (click)="proceedToPayment()">
+        <i class="fa fa-arrow-right me-1"></i>Proceed
+      </button>
     </div>
-    <button class="btn btn-primary" (click)="proceedToPayment()">
-      Proceed
-    </button>
   </div>
-
 </div>

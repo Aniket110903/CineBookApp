@@ -79,13 +79,13 @@ export class BookingHistoryComponent implements OnInit {
 
   showDetailsModal(booking: Booking): void {
     this.selectedBooking = booking;
-    document.body.classList.add('modal-open');
+    //document.body.classList.add('modal-open');
   }
 
   closeDetailsModal(): void {
     this.selectedBooking = null;
     this.closeCancelModal();
-    document.body.classList.remove('modal-open');
+    //document.body.classList.remove('modal-open');
   }
 
   openCancelModal(booking: Booking): void {
@@ -96,16 +96,11 @@ export class BookingHistoryComponent implements OnInit {
       return;
     }
 
-    // Close booking modal visually first
+    // Close booking modal and open cancel modal
     this.selectedBooking = null;
-    document.body.classList.remove('modal-open');
-
-    // Use setTimeout to wait for modal to disappear
-    setTimeout(() => {
-      this.cancelBooking = booking;
-      this.refundAmount = this.getRefundAmount(booking.totalAmount);
-      this.showCancelConfirmation = true;
-    }, 100); // 100ms is enough
+    this.cancelBooking = booking;
+    this.refundAmount = this.getRefundAmount(booking.totalAmount);
+    this.showCancelConfirmation = true;
   }
 
 
@@ -139,18 +134,15 @@ export class BookingHistoryComponent implements OnInit {
     this.router.navigate(['/booking', booking.showtime.showtimeId]);
   }
   canCancel(booking: Booking): boolean {
-    debugger;
     const status = booking.bookingStatus?.toLowerCase();
     if (status !== 'confirmed') return false;
-    const paymentTime = booking.payments?.[0]?.paymentTime
-      ? new Date(booking.payments[0].paymentTime)
-      : null;
+
     const showTime = new Date(booking.showtime.startTime);
     const now = new Date();
     const hoursLeft = (showTime.getTime() - now.getTime()) / (1000 * 60 * 60);
-    const paymentHourLeft = ((paymentTime?.getTime() ?? 0) - now.getTime()) / (1000 * 60 * 60);
 
-    return hoursLeft >= 24 && paymentHourLeft <= 12;
+    // Simplified logic: booking can be cancelled if it's confirmed and show is more than 24 hours away
+    return hoursLeft >= 24;
   }
 
   getRefundAmount(amount: number): number {

@@ -1,13 +1,13 @@
+
+/* Desktop styles (default) */
 .notification-container {
   position: fixed;
   top: 80px;
   right: 20px;
   width: 320px;
-  /* background removed */
-  /* backdrop-filter removed */
-  box-shadow: none; /* Optional: Remove shadow from container */
-  border-radius: 0; /* Optional: Remove border radius */
-  padding: 0; /* Remove padding */
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
   z-index: 1000;
   opacity: 1;
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -19,9 +19,36 @@
     transform: translateX(20px);
   }
 
+/* Mobile styles */
+@media (max-width: 768px) {
+  .notification-container {
+    top: 60px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100vw - 40px);
+    max-width: 350px;
+    padding: 0 10px;
+  }
+
+    .notification-container.ng-animating-out {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+  .notification-container {
+    width: calc(100vw - 20px);
+    max-width: 300px;
+    padding: 0 5px;
+  }
+}
+
 .notification {
   position: relative;
-  background: rgba(255 255 255 / 88%); /* translucent glass look */
+  background: rgba(255 255 255 / 88%);
   margin-bottom: 10px;
   padding: 12px 15px;
   border-radius: 12px;
@@ -49,7 +76,14 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 250px; /* control max width */
+  max-width: 250px;
+}
+
+/* Mobile message adjustments */
+@media (max-width: 768px) {
+  .message {
+    max-width: calc(100% - 30px); /* Account for close button */
+  }
 }
 
 .time {
@@ -69,4 +103,19 @@
   cursor: pointer;
   color: #888;
   font-weight: bold;
+  padding: 0;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Touch-friendly close button on mobile */
+@media (max-width: 768px) {
+  .close-btn {
+    min-width: 24px;
+    height: 24px;
+    font-size: 1.3rem;
+  }
 }

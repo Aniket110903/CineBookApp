@@ -1,4 +1,11 @@
 <div class="carousel-wrapper">
+  <!-- Optional navigation buttons for mobile -->
+  <button class="nav-btn nav-btn-prev"
+          (click)="prevSlide()"
+          *ngIf="isMobile">
+    &#8249;
+  </button>
+
   <div class="carousel-container">
     <div *ngFor="let slide of visibleSlides; let i = index; trackBy: trackBySlide"
          class="carousel-slide"
@@ -7,4 +14,20 @@
       <img [src]="slide.posterUrl" [alt]="slide.title" />
     </div>
   </div>
+
+  <!-- Optional navigation buttons for mobile -->
+  <button class="nav-btn nav-btn-next"
+          (click)="nextSlide()"
+          *ngIf="isMobile">
+    &#8250;
+  </button>
+</div>
+
+<!-- Optional dots indicator for mobile -->
+<div class="carousel-dots" *ngIf="isMobile && slides.length > 0">
+  <span *ngFor="let slide of slides; let i = index"
+        class="dot"
+        [class.active]="i === currentIndex"
+        (click)="goToSlide(i)">
+  </span>
 </div>
