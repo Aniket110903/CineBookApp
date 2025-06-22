@@ -1,5 +1,6 @@
 ﻿using CineBookDataAccessLayer.Models; // Make sure this points to your Booking model namespace
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Linq;
@@ -11,12 +12,16 @@ namespace CineBookServices.Services
     {
         private readonly string _sendGridApiKey;
         private readonly string _fromEmail;
+        private readonly SendgridSettings _settings;
 
         // Inject IConfiguration to access SendGrid API key from appsettings.json
-        public EmailService(IConfiguration configuration)
+        public EmailService(IOptions<SendgridSettings> settings)
         {
-            _sendGridApiKey = configuration["SendGrid:ApiKey"];
-            _fromEmail = configuration["SendGrid:FromEmail"];
+            _settings = settings.Value;
+            _sendGridApiKey= _settings.ApiKey;
+            _fromEmail= _settings.FromEmail;
+            //_sendGridApiKey = configuration["SendGrid:ApiKey"];
+            //_fromEmail = configuration["SendGrid:FromEmail"];
         }
 
         public async Task SendBookingConfirmationEmailAsync(string toEmail, Booking booking)

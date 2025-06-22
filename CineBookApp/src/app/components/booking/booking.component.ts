@@ -146,7 +146,7 @@ import { UserService } from '../../services/User/user.service';
 
    pay(orderId: string, amount: number, seatIds: number[]): void {
      const options = {
-       key: 'rzp_test_7uuY3OrccXOkSW',
+       key: 'rzp_test_6vPZ9YQuhNgkcg',
        amount: amount * 100,
        currency: 'INR',
        name: 'CineBook',

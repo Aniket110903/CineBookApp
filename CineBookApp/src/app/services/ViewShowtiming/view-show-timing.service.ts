@@ -15,7 +15,7 @@ export class ViewShowTimingService {
 
   constructor(private http: HttpClient) { }
 
-  getTheatres(date: Date, movieId: number, location: string): Observable<Theatre[]> {
+  getShowtimes(date: Date, movieId: number, location: string): Observable<Theatre[]> {
 
     //console.log(date + " " + movieId + " " + location);
     const formattedDate = date.toISOString().split('T')[0];

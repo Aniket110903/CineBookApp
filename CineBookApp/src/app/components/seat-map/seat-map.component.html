@@ -49,7 +49,7 @@
 
   <div class="seat-container">
     <div class="edit-ticket-btn-container">
-      <button class="btn btn-outline-warning" (click)="openSeatCountModal()">
+      <button class="btn btn-primary" (click)="openSeatCountModal()">
         Edit Ticket {{selectedSeatCount}}
       </button>
     </div>
@@ -121,7 +121,7 @@
       <strong>{{ selectedSeatLabels.size }} Seat(s) Selected</strong><br />
       <small>Total: ₹{{ getTotalPrice() }}</small>
     </div>
-    <button class="btn btn-success" (click)="proceedToPayment()">
+    <button class="btn btn-primary" (click)="proceedToPayment()">
       Proceed
     </button>
   </div>

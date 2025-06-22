@@ -156,17 +156,9 @@
   z-index: 10; /* Ensure it's on top of other elements */
 }
 
-  .edit-ticket-btn-container .btn {
-    background-color: teal;
-    color: white;
-    border-color: teal;
-    font-weight: bold;
-    border-radius: 5px;
-  }
+  
 
-    .edit-ticket-btn-container .btn:hover {
-      background-color: #a0d6d3;
-    }
+    
 
 /* Style for the Proceed button */
 
@@ -186,18 +178,9 @@
   align-items: center;
 }
 
-  .proceed-popup .btn-success {
-    background-color: #026a6a;
-    border-color: #026a6a;
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-  }
+  
 
-    .proceed-popup .btn-success:hover {
-      background-color: #025d5d;
-      border-color: #025d5d;
-    }
+    
 
 @keyframes slideUp {
   from {

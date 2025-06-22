@@ -1,1 +1,10 @@
-<p>crousel works!</p>
+<div class="carousel-wrapper">
+  <div class="carousel-container">
+    <div *ngFor="let slide of visibleSlides; let i = index; trackBy: trackBySlide"
+         class="carousel-slide"
+         [ngClass]="getSlideClass(i)"
+         (click)="onSlideClick(slide.movieId)">
+      <img [src]="slide.posterUrl" [alt]="slide.title" />
+    </div>
+  </div>
+</div>

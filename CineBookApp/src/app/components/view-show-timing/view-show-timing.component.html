@@ -1,1 +1,106 @@
-<p>view-show-timing works!</p>
+
+<div class="movie-booking-container">
+  <div class="back-button-container">
+    <button class="back-button" (click)="goBack()">
+      <i class="fa fa-arrow-left"></i>
+      <span>Back</span>
+    </button>
+  </div>
+
+  <!--<div class="movie-summary" *ngIf="movie">
+    <div class="movie-infod d-flex align-item-center">
+      <h2 class="movie-title">{{ movie.title }}</h2>
+      <div class="movie-details-inline">
+        <span class="detail-item">
+          <i class="fa fa-film"></i>
+          {{ movie.genre }}
+        </span>
+        <span class="detail-item">
+          <i class="fa fa-star"></i>
+          <span class="rating">{{ movie.rating }}/10</span>
+        </span>
+        <span class="detail-item">
+          <i class="fa fa-calendar"></i>
+          {{ movie.releaseDate | date }}
+        </span>
+      </div>
+    </div>
+  </div>-->
+  <div class="movie-summary" *ngIf="movie">
+    <div class="movie-info d-flex align-items-center">
+      <h2 class="movie-title">{{ movie.title }}</h2>
+      <div class="movie-details-inline">
+        <span class="detail-item">
+          <i class="fa fa-film"></i>
+          {{ movie.genre }}
+        </span>
+        <span class="detail-item">
+          <i class="fa fa-star"></i>
+          <span class="rating">{{ movie.rating }}/10</span>
+        </span>
+        <span class="detail-item">
+          <i class="fa fa-calendar"></i>
+          {{ movie.releaseDate | date }}
+        </span>
+      </div>
+    </div>
+    
+    <!-- Movie description below the title and details -->
+    <div class="movie-description" *ngIf="movie.description">
+      <p>{{ movie.description }}</p>
+    </div>
+  </div>
+  <div class="date-selector-section">
+    <h3 class="section-title">
+      <i class="fa fa-calendar-alt"></i>
+      Select Your Preferred Date
+    </h3>
+    <div class="date-selector">
+      <button *ngFor="let date of dates"
+              class="date-button"
+              [class.selected]="date.toDateString() === selectedDate.toDateString()"
+              (click)="onDateSelect(date)">
+        <span class="date-day">{{ date | date: 'EEE' }}</span>
+        <span class="date-number">{{ date | date: 'd' }}</span>
+        <span class="date-month">{{ date | date: 'MMM' }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="theatres-section" *ngIf="theatres.length > 0; else noShows">
+    <h3 class="section-title">
+      <i class="fa fa-clock"></i>
+      Available Showtimes
+    </h3>
+    <div class="theatres-grid">
+      <div *ngFor="let theatre of theatres" class="theatre-card">
+        <div class="theatre-header">
+          <h4 class="theatre-name">{{ theatre.name }}</h4>
+          <p class="theatre-address">
+            <i class="fa fa-map-marker-alt"></i>
+            {{ theatre.address }}
+          </p>
+        </div>
+        <div class="showtimes">
+          <button class="showtime-button"
+                  (click)="NavigateToSeatMap(show.showtimeId)"
+                  *ngFor="let show of theatre.showtimes">
+            <span class="time">{{ show.startTime | date: 'shortTime' }}</span>
+            <span class="duration">{{ show.endTime | date: 'shortTime' }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noShows>
+    <div class="no-shows">
+      <div class="no-shows-icon">
+        <i class="fa fa-calendar-times"></i>
+      </div>
+      <h4>No Shows Available</h4>
+      <p>Sorry, there are no shows available for the selected date.</p>
+      <small>Please try selecting a different date above.</small>
+    </div>
+  </ng-template>
+</div>

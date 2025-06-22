@@ -1,0 +1,68 @@
+.carousel-wrapper {
+  width: 100%;
+  height: 400px; /* or set a fixed height like 400px */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Vertically centers .carousel-container */
+  margin: 0px 0;
+  overflow: hidden;
+}
+
+
+
+.carousel-container {
+  display: flex;
+  align-items: center; /* Vertically center slides inside container if needed */
+  gap: 20px;
+  transition: transform 0.5s ease-in-out;
+}
+
+
+
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+/*    border-radius: 10px;*/
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+    
+
+/* FAR LEFT */
+.far-left {
+  width: 250px;
+  height: 320px;
+  clip-path: polygon(0% 0%, 100% 4%, 100% 96%, 0% 100%);
+}
+
+/* LEFT */
+.left {
+  width: 250px;
+  height: 300px;
+  clip-path: polygon(0% 1%, 100% 5%, 100% 95%, 0% 99%);
+}
+
+/* CENTER (Smallest) */
+.center {
+  width: 250px;
+  height: 270px;
+}
+
+/* RIGHT */
+.right {
+  width: 250px;
+  height: 300px;
+  clip-path: polygon(0% 5%, 100% 1%, 100% 99%, 0% 95%);
+}
+
+/* FAR RIGHT */
+.far-right {
+  width: 250px;
+  height: 320px;
+  clip-path: polygon(0% 4%, 100% 0%, 100% 100%, 0% 96%);
+}
+  .far-right:hover, .right:hover, .center:hover, .left:hover, .far-left:hover{
+    transform: scale(1.1);
+    transition: ease-in-out 0.3s;
+  }

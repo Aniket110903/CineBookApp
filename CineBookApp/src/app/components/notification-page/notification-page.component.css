@@ -241,7 +241,7 @@
 }
 
 /* Dark mode support with teal theme */
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
   .notifications-container {
     background: #0f1419;
     border-color: rgba(0, 128, 128, 0.3);
@@ -290,7 +290,7 @@
       color: #5eead4;
     }
 }
-
+*/
 /* Smooth animations for state changes */
 .notification {
   animation: slideIn 0.3s ease-out;

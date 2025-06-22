@@ -1,4 +1,4 @@
-using CineBookDataAccessLayer;
+﻿using CineBookDataAccessLayer;
 using CineBookDataAccessLayer.Models;
 using CineBookServices.Services;
 namespace CineBookServices
@@ -22,6 +22,16 @@ namespace CineBookServices
                 c => new CineBookRepository(c.GetRequiredService<CineBookDbContext>()));
             builder.Services.AddHttpClient<RazorpayService>();
             builder.Services.AddScoped<EmailService>();
+            builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddUserSecrets<Program>(optional: true)
+    .AddEnvironmentVariables();
+
+            builder.Services.Configure<RazorpaySettings>(
+    builder.Configuration.GetSection("Razorpay"));
+            builder.Services.Configure<SendgridSettings>(
+    builder.Configuration.GetSection("SendGrid"));
 
             builder.Services.AddTransient<BookingService>();
             var app = builder.Build();

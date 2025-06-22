@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,14 +13,16 @@ namespace CineBookServices.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
-
-        public RazorpayService(HttpClient httpClient, IConfiguration configuration)
+        private readonly RazorpaySettings _settings;
+        public RazorpayService(HttpClient httpClient, IConfiguration configuration, IOptions<RazorpaySettings> settings)
         {
             _httpClient = httpClient;
             _configuration = configuration;
-
-            string apiKey = _configuration["Razorpay:Key"];
-            string secret = _configuration["Razorpay:Secret"];
+            _settings = settings.Value;
+            //string apiKey = _configuration["Razorpay:Key"];
+            //string secret = _configuration["Razorpay:Secret"];
+            string apiKey = _settings.Key;
+            string secret = _settings.Secret;
             var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{apiKey}:{secret}"));
 
             _httpClient.DefaultRequestHeaders.Authorization =
